@@ -10,14 +10,14 @@ public class Tools
     }
     private void AskCarName(RaceCar userCar)
     {
-        string userInput = UserInterface.UserInput("Please enter the TYPE of car you are working on");
+        string userInput = SetupController.UserInput("Please enter the TYPE of car you are working on");
         userCar.SetCarName(userInput);
     }
     private void AskTireSizes(RaceCar userCar)
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
-            float tireDiameter = UserInterface.ValidNumber($"Enter {tirePosition} Tire Size: ");
+            float tireDiameter = SetupController.ValidNumber($"Enter {tirePosition} Tire Size: ");
             userCar.SetTireSize(carCorner, tireDiameter);
         }
     }
@@ -25,7 +25,7 @@ public class Tools
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
-            float tireWeight = UserInterface.ValidNumber($"Enter {tirePosition} Corner Weight: ");
+            float tireWeight = SetupController.ValidNumber($"Enter {tirePosition} Corner Weight: ");
             userCar.SetCornerWeight(carCorner, tireWeight);
         }
     }
@@ -33,7 +33,7 @@ public class Tools
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
-            float frameHeight = UserInterface.ValidNumber($"Enter {tirePosition} Frame Height: ");
+            float frameHeight = SetupController.ValidNumber($"Enter {tirePosition} Frame Height: ");
             userCar.SetFrameHeight(carCorner, frameHeight);
         }
     }

@@ -1,37 +1,41 @@
-﻿public class UserInterface
+﻿public class SetupController
 {
     //Allowing the UI to access the tools and race car class, but preventing anyone from modifying them.
     private readonly RaceCar _car = new();
     private readonly Tools _tools = new();
-    public UserInterface() { }
+    public SetupController() { }
     public void ShowUI() //Main Menu Prototype. **Build in program then carry over to here**
     {
-        WelcomeMessage();
-        DisplayMenu();
+        VersionInfo();
+        ProgramLoop();
     }
-    private void WelcomeMessage()
+    private void VersionInfo()
     {
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine(AppInfo.Name);
         Console.WriteLine($"Version: {AppInfo.Version}");
         Console.ResetColor();
     }
-    private void DisplayMenu()
+    private void ProgramLoop()
     {
         bool endProgram = false;
         while (endProgram == false)
         {
-            Console.WriteLine("===========MAIN MENU===========");
-            Console.WriteLine("1 - Enter New Setup");
-            Console.WriteLine("2 - Display Current Setup Sheet");
-            Console.WriteLine("3 - Display Current Stagger");
-            Console.WriteLine("4 - Display Current Weight Percentages");
-            Console.WriteLine("5 - Display Current Rake/Tilt");
-            Console.WriteLine("6 - Close Program");
-            Console.WriteLine("===============================");
+            DisplayMainMenu();
             MenuOption choice = (MenuOption)ValidNumber();
             endProgram = MenuChoice(choice);
         }
+    }
+    private void DisplayMainMenu()
+    {
+        Console.WriteLine("===========MAIN MENU===========");
+        Console.WriteLine("1 - Enter New Setup");
+        Console.WriteLine("2 - Display Current Setup Sheet");
+        Console.WriteLine("3 - Display Current Stagger");
+        Console.WriteLine("4 - Display Current Weight Percentages");
+        Console.WriteLine("5 - Display Current Rake/Tilt");
+        Console.WriteLine("6 - Close Program");
+        Console.WriteLine("===============================");
     }
     private bool MenuChoice(MenuOption userInput)
     {
