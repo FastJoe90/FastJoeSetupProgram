@@ -31,7 +31,6 @@ public class Tools
     }
     private void AskFrameHeight(RaceCar userCar)
     {
-
         foreach (var (carCorner, tirePosition) in Corners)
         {
             float frameHeight = UserInterface.ValidNumber($"Enter {tirePosition} Frame Height: ");

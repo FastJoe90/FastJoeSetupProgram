@@ -12,8 +12,8 @@
     private void WelcomeMessage()
     {
         Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("Fast Joe's: Digital Crew Chief");
-        Console.WriteLine("Version 0.0.1");
+        Console.WriteLine(AppInfo.Name);
+        Console.WriteLine($"Version: {AppInfo.Version}");
         Console.ResetColor();
     }
     private void DisplayMenu()
@@ -119,7 +119,8 @@
     }
     public static void InvalidInput()
     {
-        Console.Beep(1000, 100);
+        Console.Beep(350, 500);
+      
         Console.WriteLine("Not a valid choice!");
         AnyKey();
     }
