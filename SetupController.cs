@@ -1,172 +1,109 @@
 ﻿public class SetupController
 {
     //Allowing the UI to access the tools and race car class, but preventing anyone from modifying them.
-    private readonly RaceCar _car = new();
+    private readonly RaceCar _car = new();   
     
     public SetupController() { }
     public void ShowUI() //Main Menu Prototype. **Build in program then carry over to here**
     {
-        VersionInfo();
+        UI.VersionInfo();
         ProgramLoop();
     }
-    private void VersionInfo()
-    {
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine(AppInfo.Name);
-        Console.WriteLine($"Version: {AppInfo.Version}");
-        Console.ResetColor();
-    }
+   
     private void ProgramLoop()
-    {
+    {        
         bool endProgram = false;
         while (endProgram == false)
         {
             UI.DisplayMainMenu();
-            MenuOption choice = (MenuOption)ValidNumber();
-            endProgram = MenuChoice(choice);
+            MenuOption choice = (MenuOption)UI.ValidNumber();
+            endProgram = HandleMenuChoice(choice);
         }
     }
-    public void BuildCar(RaceCar userCar) //Creates a new RaceCar object with user set values.
+    private void BuildCar() //Creates a new RaceCar object with user set values.
     {
-        AskCarName(userCar);
-        AskTireSizes(userCar);
-        AskCornerWeights(userCar);
-        AskFrameHeight(userCar);
+        SetCarName();
+        SetTireSizes();
+        SetCornerWeights();
+        SetFrameHeight();
     }
-    private void AskCarName(RaceCar userCar)
+    private void SetCarName() 
     {
-        string userInput = UserInput("Please enter the TYPE of car you are working on");
-        userCar.SetCarName(userInput);
+        _car.SetCarName(UI.AskCarName());
     }
-    private void AskTireSizes(RaceCar userCar)
+    private void SetTireSizes()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
-            float tireDiameter = ValidNumber($"Enter {tirePosition} Tire Size: ");
-            userCar.SetTireSize(carCorner, tireDiameter);
+            float tireDiameter = UI.AskTireDiameter(tirePosition);
+            _car.SetTireSize(carCorner, tireDiameter);
         }
     }
-    private void AskCornerWeights(RaceCar userCar)
+    private void SetCornerWeights()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
-            float tireWeight = ValidNumber($"Enter {tirePosition} Corner Weight: ");
-            userCar.SetCornerWeight(carCorner, tireWeight);
+            float tireWeight = UI.AskCornerWeight(tirePosition);
+            _car.SetCornerWeight(carCorner, tireWeight);
         }
     }
-    private void AskFrameHeight(RaceCar userCar)
+    private void SetFrameHeight()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
-            float frameHeight = ValidNumber($"Enter {tirePosition} Frame Height: ");
-            userCar.SetFrameHeight(carCorner, frameHeight);
+            float frameHeight = UI.AskFrameHeight(tirePosition);
+            _car.SetFrameHeight(carCorner, frameHeight);
         }
     }     
-    private bool MenuChoice(MenuOption userInput)
+    private bool HandleMenuChoice(MenuOption userInput)
     {
         switch (userInput)
         {
             case MenuOption.EnterSetup:
                 {
-                    BuildCar(_car);
-                    AnyKey();
+                    BuildCar();
+                    UI.AnyKey();
                     break;
                 }
             case MenuOption.DisplayFullSetup:
                 {
                     UI.DisplayFullSetup(_car);
-                    AnyKey();
+                    UI.AnyKey();
                     break;
                 }
             case MenuOption.DisplayStagger:
                 {
-                    UI.DisplayFrontStagger(_car);
-                    UI.DisplayRearStagger(_car);
-                    AnyKey();
+                    UI.ShowFrontStagger(_car);
+                    UI.ShowRearStagger(_car);
+                    UI.AnyKey();
                     break;
                 }
             case MenuOption.DisplayPercentages:
                 {
-                    UI.DisplayAllPercentages(_car);
-                    AnyKey();
+                    UI.ShowAllPercentages(_car);
+                    UI.AnyKey();
                     break;
                 }
             case MenuOption.DisplayRakeTilt:
                 {
-                    UI.DisplayRake(_car);
-                    UI.DisplayTilt(_car);
-                    AnyKey();
+                    UI.ShowRake(_car);
+                    UI.ShowTilt(_car);
+                    UI.AnyKey();
                     break;
                 }
             case MenuOption.Exit:
                 {
-                    return EndProgram();
+                    return UI.EndProgram();
                 }
             default: //Bad key press
                 {
-                    InvalidInput();
+                    UI.InvalidInput();
                     break;
                 }
         }
         return false;
     }
-  
-    public static string UserInput(string inputMessage)
-    {
-        Console.WriteLine(inputMessage);
-        return Console.ReadLine();
-    }
-    public static void InvalidInput()
-    {
-        Console.Beep(350, 500);
       
-        Console.WriteLine("Not a valid choice!");
-        AnyKey();
-    }
-    public static int ValidNumber()
-    {
-        while (true)
-        {
-            Console.Write($"Choose an option: ");
-            string userInput = Console.ReadLine();
-            if (int.TryParse(userInput, out int number))
-            {
-                return number;
-            }
-            else
-            {
-                InvalidInput();
-            }
-        }
-    }
-    public static float ValidNumber(string inputMessage) //Input validation method.
-    {
-        while (true)
-        {
-            Console.Write(inputMessage);
-            string userInput = Console.ReadLine();
-            if (float.TryParse(userInput, out float number))
-            {
-                return number;
-            }
-            else
-            {
-                InvalidInput();
-            }
-        }
-    }
-    private bool EndProgram()
-    {
-        Console.WriteLine("Have a good night!");
-        AnyKey();
-        return true;
-    }
-    private static void AnyKey()
-    {
-        Console.Write("Press ANY key to Continue: ");
-        Console.ReadKey();
-        Console.WriteLine();
-    }
     private enum MenuOption
     {
         EnterSetup = 1,
@@ -182,6 +119,5 @@
         (Corner.RF, "Right Front"),
         (Corner.LR, "Left Rear"),
         (Corner.RR, "Right Rear"),
-
     };
 }
