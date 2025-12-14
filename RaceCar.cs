@@ -1,75 +1,57 @@
 ﻿public class RaceCar
 {
 
-    private string CarName { get; set; } = "Default";
-    private  float[] CornerWeight { get; set; } = new float[4]; //Pounds
-    private float[] TireDiameter { get; set; } = new float[4]; //Inches
-    private float[] FrameHeight { get; set; } = new float[4]; //Inches
-    private float TotalWeight => CornerWeight.Sum();
-    private float CrossWeightPercentage => (CornerWeight[(int)Corner.LR] + CornerWeight[(int)Corner.RF]) / TotalWeight * 100;
-    private float LeftSideWeightPercentage => (CornerWeight[(int)Corner.LR] + CornerWeight[(int)Corner.LF]) / TotalWeight * 100;
-    private float RearWeightPercentage => (CornerWeight[(int)Corner.LR] + CornerWeight[(int)Corner.RR]) / TotalWeight * 100;
-    private float FrontStagger => TireDiameter[(int)Corner.RF] - TireDiameter[(int)Corner.LF];
-    private float RearStagger => TireDiameter[(int)Corner.RR] - TireDiameter[(int)Corner.LR];
-    private float Tilt => ((FrameHeight[(int)Corner.RF] + FrameHeight[(int)Corner.RR]) / 2) - ((FrameHeight[(int)Corner.LF] + FrameHeight[(int)Corner.LR]) / 2);
-    private float Rake => ((FrameHeight[(int)Corner.LR] + FrameHeight[(int)Corner.RR]) / 2) - ((FrameHeight[(int)Corner.LF] + FrameHeight[(int)Corner.RF]) / 2);
-    public void SetCarName(string carName)
+    private string _carName = "Default";
+    private readonly float[] _cornerWeight = new float[4]; //Pounds
+    private readonly float[] _tireDiameter = new float[4]; //Inches
+    private readonly float[] _frameHeight = new float[4]; //Inches
+    public float TotalWeight => _cornerWeight.Sum();
+    public float CrossWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RF]) / TotalWeight * 100;
+    public float LeftSideWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.LF]) / TotalWeight * 100;
+    public float RearWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RR]) / TotalWeight * 100;
+    public float FrontStagger => _tireDiameter[(int)Corner.RF] - _tireDiameter[(int)Corner.LF];
+    public float RearStagger => _tireDiameter[(int)Corner.RR] - _tireDiameter[(int)Corner.LR];
+    public float Tilt => ((_frameHeight[(int)Corner.RF] + _frameHeight[(int)Corner.RR]) / 2) - ((_frameHeight[(int)Corner.LF] + _frameHeight[(int)Corner.LR]) / 2);
+    public float Rake => ((_frameHeight[(int)Corner.LR] + _frameHeight[(int)Corner.RR]) / 2) - ((_frameHeight[(int)Corner.LF] + _frameHeight[(int)Corner.RF]) / 2);
+    public string GetCarName() => _carName; 
+    public void SetCarName(string carName) => _carName = carName;
+
+    public float GetCornerWeight(Corner corner) => _cornerWeight[(int)corner];
+
+    public void SetCornerWeight(Corner corner, float weight) //One = 1 Corner. ALL = ALL Corners
     {
-        CarName = carName;
-    }
-    public void SetCornerWeightOne(Corner corner, float weight) //One = 1 Corner. ALL = ALL Corners
-    {
-        CornerWeight[(int)corner] = weight;
-    }
+        _cornerWeight[(int)corner] = weight;
+    }  
     public void SetCornerWeightAll(float lF, float rF, float lR, float rR)
     {
-        CornerWeight[(int)Corner.LF] = lF;
-        CornerWeight[(int)Corner.RF] = rF;
-        CornerWeight[(int)Corner.LR] = lR;
-        CornerWeight[(int)Corner.RR] = rR;
+        _cornerWeight[(int)Corner.LF] = lF;
+        _cornerWeight[(int)Corner.RF] = rF;
+        _cornerWeight[(int)Corner.LR] = lR;
+        _cornerWeight[(int)Corner.RR] = rR;
     }
-    public void SetTireSizeOne(Corner corner, float diameter)
+    public float GetTireSize(Corner corner) => _tireDiameter[(int)corner];
+    public void SetTireSize(Corner corner, float diameter)
     {
-        TireDiameter[(int)corner] = diameter;
+        _tireDiameter[(int)corner] = diameter;
     }
     public void SetTireSizeAll(float lF, float rF, float lR, float rR)
     {
-        TireDiameter[(int)Corner.LF] = lF;
-        TireDiameter[(int)Corner.RF] = rF;
-        TireDiameter[(int)Corner.LR] = lR;
-        TireDiameter[(int)Corner.RR] = rR;
+        _tireDiameter[(int)Corner.LF] = lF;
+        _tireDiameter[(int)Corner.RF] = rF;
+        _tireDiameter[(int)Corner.LR] = lR;
+        _tireDiameter[(int)Corner.RR] = rR;
     }
-    public void SetFrameHeightOne(Corner corner, float height)
+    public float GetFrameHeight(Corner corner) => _frameHeight[(int)corner];
+    public void SetFrameHeight(Corner corner, float height)
     {
-        FrameHeight[(int)corner] = height;
+        _frameHeight[(int)corner] = height;
     }
     public void SetFrameHeightAll(float lF, float rF, float lR, float rR)
     {
-        FrameHeight[(int)Corner.LF] = lF;
-        FrameHeight[(int)Corner.RF] = rF;
-        FrameHeight[(int)Corner.LR] = lR;
-        FrameHeight[(int)Corner.RR] = rR;
-    }
-    //Descriptive Methods.
-    public void DisplayCarName() => Console.WriteLine($"{CarName}");
-    public void DisplayAllPercentages()
-    {
-        DisplayCrossWeight();
-        DisplayLeftWeight();
-        DisplayRearWeight();
-    }
-    public void DisplayTotalWeight() => Console.WriteLine($"{TotalWeight:0.0} Total Weight in Lbs.");
-    public void DisplayCrossWeight() => Console.WriteLine($"{CrossWeightPercentage:0.00}% Cross Weight");
-    public void DisplayLeftWeight() => Console.WriteLine($"{LeftSideWeightPercentage:0.00}% Left Side Weight");
-    public void DisplayRearWeight() => Console.WriteLine($"{RearWeightPercentage:0.00}% Rear Weight");
-    public void DisplayFrontStagger() => Console.WriteLine($"{FrontStagger:0.00}\" Front Stagger");
-    public void DisplayRearStagger() => Console.WriteLine($"{RearStagger:0.00}\" Rear Stagger");
-    public void DisplayRake() => Console.WriteLine($"{Rake:0.00}\" of Rake"); //Negatives should be possible for Rake and Tilt
-    public void DisplayTilt() => Console.WriteLine($"{Tilt:0.00}\" of Tilt");
-    public void DisplayAllRideHeights()
-    {
-        Console.WriteLine($"LEFT FRONT: {FrameHeight[(int)Corner.LF]}\"    RIGHT FRONT: {FrameHeight[(int)Corner.RF]}\"");
-        Console.WriteLine($"LEFT REAR:  {FrameHeight[(int)Corner.LR]}\"     RIGHT REAR: {FrameHeight[(int)Corner.RR]}\"");
+        _frameHeight[(int)Corner.LF] = lF;
+        _frameHeight[(int)Corner.RF] = rF;
+        _frameHeight[(int)Corner.LR] = lR;
+        _frameHeight[(int)Corner.RR] = rR;
     }
 }
 public enum Corner { LF, RF, LR, RR }

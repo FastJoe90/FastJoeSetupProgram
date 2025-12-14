@@ -1,4 +1,3 @@
-﻿RaceCar car = new RaceCar();
-Tools tools = new Tools();
-UserInterface ui = new UserInterface();
-ui.ShowUI(car ,tools);
+﻿
+UserInterface ui = new(); //Creates a new UI object.
+ui.ShowUI(); //Displaying that object on the console.
