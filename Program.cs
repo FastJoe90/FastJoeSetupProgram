@@ -1,3 +1,3 @@
 ﻿
-SetupController ui = new(); //Creates a new UI object.
-ui.ShowUI(); //Displaying that object on the console.
+SetupController master = new(); //Creates a new UI object.
+master.ShowUI(); //Displaying that object on the console.

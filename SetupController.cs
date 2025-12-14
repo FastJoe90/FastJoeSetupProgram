@@ -2,7 +2,7 @@
 {
     //Allowing the UI to access the tools and race car class, but preventing anyone from modifying them.
     private readonly RaceCar _car = new();
-    private readonly Tools _tools = new();
+    
     public SetupController() { }
     public void ShowUI() //Main Menu Prototype. **Build in program then carry over to here**
     {
@@ -21,55 +21,80 @@
         bool endProgram = false;
         while (endProgram == false)
         {
-            DisplayMainMenu();
+            UI.DisplayMainMenu();
             MenuOption choice = (MenuOption)ValidNumber();
             endProgram = MenuChoice(choice);
         }
     }
-    private void DisplayMainMenu()
+    public void BuildCar(RaceCar userCar) //Creates a new RaceCar object with user set values.
     {
-        Console.WriteLine("===========MAIN MENU===========");
-        Console.WriteLine("1 - Enter New Setup");
-        Console.WriteLine("2 - Display Current Setup Sheet");
-        Console.WriteLine("3 - Display Current Stagger");
-        Console.WriteLine("4 - Display Current Weight Percentages");
-        Console.WriteLine("5 - Display Current Rake/Tilt");
-        Console.WriteLine("6 - Close Program");
-        Console.WriteLine("===============================");
+        AskCarName(userCar);
+        AskTireSizes(userCar);
+        AskCornerWeights(userCar);
+        AskFrameHeight(userCar);
     }
+    private void AskCarName(RaceCar userCar)
+    {
+        string userInput = UserInput("Please enter the TYPE of car you are working on");
+        userCar.SetCarName(userInput);
+    }
+    private void AskTireSizes(RaceCar userCar)
+    {
+        foreach (var (carCorner, tirePosition) in Corners)
+        {
+            float tireDiameter = ValidNumber($"Enter {tirePosition} Tire Size: ");
+            userCar.SetTireSize(carCorner, tireDiameter);
+        }
+    }
+    private void AskCornerWeights(RaceCar userCar)
+    {
+        foreach (var (carCorner, tirePosition) in Corners)
+        {
+            float tireWeight = ValidNumber($"Enter {tirePosition} Corner Weight: ");
+            userCar.SetCornerWeight(carCorner, tireWeight);
+        }
+    }
+    private void AskFrameHeight(RaceCar userCar)
+    {
+        foreach (var (carCorner, tirePosition) in Corners)
+        {
+            float frameHeight = ValidNumber($"Enter {tirePosition} Frame Height: ");
+            userCar.SetFrameHeight(carCorner, frameHeight);
+        }
+    }     
     private bool MenuChoice(MenuOption userInput)
     {
         switch (userInput)
         {
             case MenuOption.EnterSetup:
                 {
-                    _tools.BuildCar(_car);
+                    BuildCar(_car);
                     AnyKey();
                     break;
                 }
-            case MenuOption.FullSheet:
+            case MenuOption.DisplayFullSetup:
                 {
-                    DisplayFullSheet(_car);
+                    UI.DisplayFullSetup(_car);
                     AnyKey();
                     break;
                 }
-            case MenuOption.Stagger:
+            case MenuOption.DisplayStagger:
                 {
-                    DisplayFrontStagger(_car);
-                    DisplayRearStagger(_car);
+                    UI.DisplayFrontStagger(_car);
+                    UI.DisplayRearStagger(_car);
                     AnyKey();
                     break;
                 }
-            case MenuOption.Percentages:
+            case MenuOption.DisplayPercentages:
                 {
-                    DisplayAllPercentages(_car);
+                    UI.DisplayAllPercentages(_car);
                     AnyKey();
                     break;
                 }
-            case MenuOption.RakeTilt:
+            case MenuOption.DisplayRakeTilt:
                 {
-                    DisplayRake(_car);
-                    DisplayTilt(_car);
+                    UI.DisplayRake(_car);
+                    UI.DisplayTilt(_car);
                     AnyKey();
                     break;
                 }
@@ -85,37 +110,7 @@
         }
         return false;
     }
-    private void DisplayFullSheet(RaceCar car)
-    {
-        DisplayCarName(car);
-        DisplayTotalWeight(car);
-        DisplayAllPercentages(car);
-        DisplayAllRideHeights(car);
-        DisplayFrontStagger(car);
-        DisplayRearStagger(car);
-        DisplayRake(car);
-        DisplayTilt(car);
-    }
-    private void DisplayCarName(RaceCar car) => Console.WriteLine($"{car.GetCarName()}");
-    private void DisplayAllPercentages(RaceCar car)
-    {
-        DisplayCrossWeight(car);
-        DisplayLeftWeight(car);
-        DisplayRearWeight(car);
-    }
-    private void DisplayTotalWeight(RaceCar car) => Console.WriteLine($"TOTAL WEIGHT: {car.TotalWeight:0.0} lbs.");
-    private void DisplayCrossWeight(RaceCar car) => Console.WriteLine($"CROSS WEIGHT: {car.CrossWeightPercentage:0.00}%");
-    private void DisplayLeftWeight(RaceCar car) => Console.WriteLine($"LEFT SIDE WEIGHT: {car.LeftSideWeightPercentage:0.00}%");
-    private void DisplayRearWeight(RaceCar car) => Console.WriteLine($"REAR WEIGHT: {car.RearWeightPercentage:0.00}%");
-    private void DisplayFrontStagger(RaceCar car) => Console.WriteLine($"FRONT STAGGER: {car.FrontStagger:0.00}\"");
-    private void DisplayRearStagger(RaceCar car) => Console.WriteLine($"REAR STAGGER: {car.RearStagger:0.00}\"");
-    private void DisplayRake(RaceCar car) => Console.WriteLine($"RAKE: {car.Rake:0.00}\""); //Negatives should be allowed here.    
-    private void DisplayTilt(RaceCar car) => Console.WriteLine($"TILT: {car.Tilt:0.00}\""); //Negatives should be allowed her.   
-    private void DisplayAllRideHeights(RaceCar car)
-    {
-        Console.WriteLine($"LEFT FRONT: {car.GetFrameHeight(Corner.LF)}\"    RIGHT FRONT: {car.GetFrameHeight(Corner.RF)}\"");
-        Console.WriteLine($"LEFT REAR:  {car.GetFrameHeight(Corner.LR)}\"     RIGHT REAR: {car.GetFrameHeight(Corner.RR)}\"");
-    }
+  
     public static string UserInput(string inputMessage)
     {
         Console.WriteLine(inputMessage);
@@ -175,10 +170,18 @@
     private enum MenuOption
     {
         EnterSetup = 1,
-        FullSheet = 2,
-        Stagger = 3,
-        Percentages = 4,
-        RakeTilt = 5,
+        DisplayFullSetup = 2,
+        DisplayStagger = 3,
+        DisplayPercentages = 4,
+        DisplayRakeTilt = 5,
         Exit = 6,
     }
+    private static readonly (Corner corner, string label)[] Corners =
+     {
+        (Corner.LF, "Left Front"),
+        (Corner.RF, "Right Front"),
+        (Corner.LR, "Left Rear"),
+        (Corner.RR, "Right Rear"),
+
+    };
 }
