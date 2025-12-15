@@ -53,21 +53,21 @@
     }
     public static void DisplayFullSetup(RaceCar car)
     {
-        Console.Clear();
+        Console.Clear();              
         InsertTitleHeader("FULL SETUP SHEET");
-        DisplaySectionHeader("RACE CAR CLASS");
+        DisplaySectionHeader("RACE CAR CLASS");       
         ShowCarName(car);
-        InsertHeaderBreak();
-        DisplaySectionHeader("VEHICLE WEIGHTS");
+        InsertHeaderBreak();        
+        DisplaySectionHeader("VEHICLE WEIGHTS");     
         ShowTotalWeight(car);
         ShowAllPercentages(car);
         InsertSectionBreak();
-        DisplaySectionHeader("RIDE HEIGHTS");
+        DisplaySectionHeader("RIDE HEIGHTS");        
         ShowAllRideHeights(car);
         ShowRake(car);
         ShowTilt(car);
-        InsertSectionBreak();
-        DisplaySectionHeader("TIRE INFO");        
+        InsertSectionBreak();      
+        DisplaySectionHeader("TIRE INFO");       
         ShowFrontStagger(car);
         ShowRearStagger(car);       
         InsertSectionBreak();
@@ -104,9 +104,9 @@
     private static void DisplaySectionHeader(string sectionName)
     {           
         int padding = (HeaderWidth - sectionName.Length) / 2;
-        string leftPad = new string(' ', padding);
+        int paddedLength = sectionName.Length + padding;
         InsertSectionBreak();
-        Console.WriteLine($"{leftPad}{sectionName}");
+        Console.WriteLine(sectionName.PadLeft(paddedLength).PadRight(HeaderWidth));
         InsertSectionBreak();       
     }
 
@@ -165,10 +165,8 @@
     }
     //Use this to create pause points in the UI.
     public static void PressAnyKey()
-    {
-       
-        Console.Write("Press ANY key to Continue: ");
-        Console.ResetColor();
+    {       
+        Console.Write("Press ANY key to Continue: ");        
         Console.ReadKey();
         Console.WriteLine();
     }
