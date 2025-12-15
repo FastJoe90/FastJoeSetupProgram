@@ -1,22 +1,20 @@
 ﻿public class SetupController
 {
     //Allowing the UI to access the tools and race car class, but preventing anyone from modifying them.
-    private readonly RaceCar _car = new();   
-    
+    private readonly RaceCar _car = new();    
     public SetupController() { }
     public void ShowUI() //Main Menu Prototype. **Build in program then carry over to here**
     {
         UI.VersionInfo();
         ProgramLoop();
-    }
-   
+    }   
     private void ProgramLoop()
     {        
         bool endProgram = false;
         while (endProgram == false)
         {
             UI.DisplayMainMenu();
-            MenuOption choice = (MenuOption)UI.GetValidFloat();
+            MenuOption choice = (MenuOption)UI.GetValidInt();
             endProgram = HandleMenuChoice(choice);
         }
     }
@@ -99,11 +97,10 @@
                 {
                     UI.InvalidInput();
                     break;
-                }
-        }
+                }            
+        }       
         return false;
-    }
-      
+    }      
     private enum MenuOption
     {
         EnterSetup = 1,

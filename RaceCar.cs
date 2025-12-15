@@ -1,6 +1,5 @@
 ﻿public class RaceCar
-{
-    
+{    
     private readonly float[] _cornerWeight = new float[4]; //Pounds
     private readonly float[] _tireDiameter = new float[4]; //Inches
     private readonly float[] _frameHeight = new float[4]; //Inches
@@ -27,7 +26,6 @@
     public void SetFrameHeight(Corner corner, float height)
     {
         _frameHeight[(int)corner] = height;
-    }
-  
+    }  
 }
 public enum Corner { LF, RF, LR, RR }
