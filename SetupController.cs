@@ -16,7 +16,7 @@
         while (endProgram == false)
         {
             UI.DisplayMainMenu();
-            MenuOption choice = (MenuOption)UI.ValidNumber();
+            MenuOption choice = (MenuOption)UI.GetValidFloat();
             endProgram = HandleMenuChoice(choice);
         }
     }
@@ -29,7 +29,7 @@
     }
     private void SetCarName() 
     {
-        _car.SetCarName(UI.AskCarName());
+        _car.CarName = (UI.AskCarName());
     }
     private void SetTireSizes()
     {
@@ -62,33 +62,33 @@
             case MenuOption.EnterSetup:
                 {
                     BuildCar();
-                    UI.AnyKey();
+                    UI.PressAnyKey();
                     break;
                 }
             case MenuOption.DisplayFullSetup:
                 {
                     UI.DisplayFullSetup(_car);
-                    UI.AnyKey();
+                    UI.PressAnyKey();
                     break;
                 }
             case MenuOption.DisplayStagger:
                 {
                     UI.ShowFrontStagger(_car);
                     UI.ShowRearStagger(_car);
-                    UI.AnyKey();
+                    UI.PressAnyKey();
                     break;
                 }
             case MenuOption.DisplayPercentages:
                 {
                     UI.ShowAllPercentages(_car);
-                    UI.AnyKey();
+                    UI.PressAnyKey();
                     break;
                 }
             case MenuOption.DisplayRakeTilt:
                 {
                     UI.ShowRake(_car);
                     UI.ShowTilt(_car);
-                    UI.AnyKey();
+                    UI.PressAnyKey();
                     break;
                 }
             case MenuOption.Exit:

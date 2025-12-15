@@ -3,10 +3,12 @@ public class UI
 {
     public static void VersionInfo()
     {
-        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine(AppInfo.Name);
+        Console.WriteLine("");
         Console.WriteLine($"Version: {AppInfo.Version}");
         Console.ResetColor();
+        Console.WriteLine();
     }
     public static void DisplayMainMenu()
     {
@@ -19,23 +21,35 @@ public class UI
         Console.WriteLine("6 - Close Program");
         Console.WriteLine("===============================");
     }
+    public static bool EndProgram()
+    {
+        Console.WriteLine("Have a good night!");
+        PressAnyKey();
+        return true;
+    }
+
+    //INPUT METHODS
+
     public static string AskCarName()
     {
-        return UserInput("Please enter the TYPE of car you are working on");
+        return GetValidString("Please enter the TYPE of car you are working on");
     }
     public static float AskTireDiameter(string vehicleCorner)
     {
-        return ValidNumber($"Enter {vehicleCorner} Tire Size: ");
+        return GetValidFloat($"Enter {vehicleCorner} Tire Size: ");
     }
     public static float AskCornerWeight(string vehicleCorner)
     {
-        return ValidNumber($"Enter {vehicleCorner} Corner Weight: ");
+        return GetValidFloat($"Enter {vehicleCorner} Corner Weight: ");
     }
     public static float AskFrameHeight(string vehicleCorner)
     {
-        return ValidNumber($"Enter {vehicleCorner} Frame Height: ");
+        return GetValidFloat($"Enter {vehicleCorner} Frame Height: ");
     }
-    public static void ShowCarName(RaceCar car) => Console.WriteLine($"{car.GetCarName()}");
+
+    //Report Methods
+
+    public static void ShowCarName(RaceCar car) => Console.WriteLine($"{car.CarName}");
     public static void ShowAllPercentages(RaceCar car)
     {
         ShowCrossWeight(car);
@@ -66,23 +80,33 @@ public class UI
         Console.WriteLine($"LEFT FRONT: {car.GetFrameHeight(Corner.LF)}\"    RIGHT FRONT: {car.GetFrameHeight(Corner.RF)}\"");
         Console.WriteLine($"LEFT REAR:  {car.GetFrameHeight(Corner.LR)}\"     RIGHT REAR: {car.GetFrameHeight(Corner.RR)}\"");
     }
-    public static string UserInput(string inputMessage)
-    {
-        Console.WriteLine(inputMessage);
-        return Console.ReadLine();
-    }
-    public static void InvalidInput()
-    {
-        Console.Beep(350, 500);
 
-        Console.WriteLine("Not a valid choice!");
-        AnyKey();
-    }
-    public static int ValidNumber()
+    //Helper utilities
+    public static string GetValidString(string inputMessage)
     {
         while (true)
         {
-            Console.Write($"Choose an option: ");
+            Console.WriteLine(inputMessage);
+            string input = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(input)) //Check if null or blank.
+            {
+                return input;
+            }
+            InvalidInput("Input cannot be empty");
+        }
+    }
+    public static void InvalidInput(string inputMessage = "Not a valid choice!") //Insert string to get custom message.
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(inputMessage);
+        Console.ResetColor();
+        PressAnyKey();
+    }
+    public static int GetValidInt()
+    {
+        while (true)
+        {
+            Console.Write("Enter your choice: ");
             string userInput = Console.ReadLine();
             if (int.TryParse(userInput, out int number))
             {
@@ -94,7 +118,7 @@ public class UI
             }
         }
     }
-    public static float ValidNumber(string inputMessage) //Input validation method.
+    public static float GetValidFloat(string inputMessage = "Please enter your choice: ") //Input validation method.
     {
         while (true)
         {
@@ -110,13 +134,7 @@ public class UI
             }
         }
     }
-    public static bool EndProgram()
-    {
-        Console.WriteLine("Have a good night!");
-        AnyKey();
-        return true;
-    }
-    public static void AnyKey()
+    public static void PressAnyKey()
     {
         Console.Write("Press ANY key to Continue: ");
         Console.ReadKey();
