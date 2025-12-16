@@ -3,8 +3,8 @@
     private const int HeaderWidth = 50;
     public static void VersionInfo()
     {
-        InsertHeaderBreak();
-        Console.ForegroundColor = ConsoleColor.Cyan;
+        InsertHeaderBreak();        
+        Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(AppInfo.Name);
         Console.WriteLine($"Version: {AppInfo.Version}");
         Console.ResetColor();
@@ -73,7 +73,7 @@
         InsertSectionBreak();
         
     }
-    public static void ShowCarName(RaceCar car) => Console.WriteLine($"{"DIVSION:",-40}{car.CarName.ToUpper()}");
+    public static void ShowCarName(RaceCar car) => Console.WriteLine($"{"DIVISION:",-40}{car.CarName.ToUpper()}");
     public static void ShowTotalWeight(RaceCar car) => Console.WriteLine($"{"TOTAL WEIGHT:",-40} {car.TotalWeight:0.0} lbs.");
     public static void ShowCrossWeight(RaceCar car) => Console.WriteLine($"{"CROSS WEIGHT:",-40} {car.CrossWeightPercentage:0.00}%");
     public static void ShowLeftWeight(RaceCar car) => Console.WriteLine($"{"LEFT SIDE WEIGHT:",-40} {car.LeftSideWeightPercentage:0.00}%");
@@ -91,17 +91,17 @@
     //HELPER UTILITIES
 
     //UI Design Methods
-    private static void InsertTitleHeader(string menuTitle)
+    private static void InsertTitleHeader(string titleName) //Uses double dashed line.
     {             
-        int padding = (HeaderWidth - menuTitle.Length) / 2;
-        int paddedLength = menuTitle.Length + padding; // The length needed to pad left      
+        int padding = (HeaderWidth - titleName.Length) / 2; 
+        int paddedLength = titleName.Length + padding; // The length needed to pad left      
         InsertHeaderBreak();
-        Console.WriteLine(menuTitle.PadLeft(paddedLength).PadRight(HeaderWidth));        
+        Console.WriteLine(titleName.PadLeft(paddedLength).PadRight(HeaderWidth));        
         InsertHeaderBreak();     
     }
-    private static void InsertHeaderBreak() => Console.WriteLine("==================================================");
+    private static void InsertHeaderBreak() => Console.WriteLine("=================================================="); //Used for section breaks.
     private static void InsertSectionBreak() => Console.WriteLine("--------------------------------------------------");
-    private static void DisplaySectionHeader(string sectionName)
+    private static void DisplaySectionHeader(string sectionName) //Uses single dashed line.
     {           
         int padding = (HeaderWidth - sectionName.Length) / 2;
         int paddedLength = sectionName.Length + padding;
