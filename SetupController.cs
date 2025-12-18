@@ -21,6 +21,7 @@
     private void BuildCar() //Creates a new RaceCar object with user set values.
     {
         SetCarName();
+        SetTirePressures();
         SetTireSizes();
         SetCornerWeights();
         SetFrameHeight();
@@ -35,6 +36,14 @@
         {
             float tireDiameter = UI.AskTireDiameter(tirePosition);
             _car.SetTireSize(carCorner, tireDiameter);
+        }
+    }
+    private void SetTirePressures()
+    {
+        foreach (var (carCorner, tirePosition) in Corners)
+        {
+            float tirePressure = UI.AskTirePressure(tirePosition);
+            _car.SetTirePressure(carCorner, tirePressure);
         }
     }
     private void SetCornerWeights()
@@ -69,8 +78,9 @@
                     UI.PressAnyKey();
                     break;
                 }
-            case MenuOption.DisplayStagger:
+            case MenuOption.DisplayTireInfo:
                 {
+                    UI.ShowAllTirePressures(_car);
                     UI.ShowFrontStagger(_car);
                     UI.ShowRearStagger(_car);
                     UI.PressAnyKey();
@@ -105,7 +115,7 @@
     {
         EnterSetup = 1,
         DisplayFullSetup = 2,
-        DisplayStagger = 3,
+        DisplayTireInfo = 3,
         DisplayPercentages = 4,
         DisplayRakeTilt = 5,
         Exit = 6,

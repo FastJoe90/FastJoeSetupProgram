@@ -3,6 +3,7 @@
     private readonly float[] _cornerWeight = new float[4]; //Pounds
     private readonly float[] _tireDiameter = new float[4]; //Inches
     private readonly float[] _frameHeight = new float[4]; //Inches
+    private readonly float[] _tirePressure = new float[4]; //PSI
     public string CarName { get; set; } = "Default";
     public float TotalWeight => _cornerWeight.Sum();
     public float CrossWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RF]) / TotalWeight * 100;
@@ -26,6 +27,11 @@
     public void SetFrameHeight(Corner corner, float height)
     {
         _frameHeight[(int)corner] = height;
-    }  
+    }
+    public float GetTirePressure(Corner corner) => _tirePressure[(int)corner];
+    public void SetTirePressure(Corner corner, float pressure)
+    {
+        _tirePressure[(int)corner] = pressure;
+    }
 }
 public enum Corner { LF, RF, LR, RR }

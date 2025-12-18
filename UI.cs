@@ -16,7 +16,7 @@
         InsertTitleHeader("Main Menu");
         Console.WriteLine("1 - Enter New Setup");
         Console.WriteLine("2 - Display Current Setup Sheet");
-        Console.WriteLine("3 - Display Current Stagger");
+        Console.WriteLine("3 - Display Tire Info");
         Console.WriteLine("4 - Display Current Weight Percentages");
         Console.WriteLine("5 - Display Current Rake/Tilt");
         Console.WriteLine("6 - Close Program");
@@ -40,6 +40,10 @@
     public static float AskFrameHeight(string vehicleCorner)
     {
         return GetValidFloat($"Enter {vehicleCorner} Frame Height: ");
+    }
+    public static float AskTirePressure(string vehicleCorner)
+    {
+        return GetValidFloat($"Enter {vehicleCorner} Tire Pressure: ");
     }
 
     //DISPLAY METHODS
@@ -67,7 +71,8 @@
         ShowRake(car);
         ShowTilt(car);
         InsertSectionBreak();      
-        DisplaySectionHeader("TIRE INFO");       
+        DisplaySectionHeader("TIRE INFO");
+        ShowAllTirePressures(car);
         ShowFrontStagger(car);
         ShowRearStagger(car);       
         InsertSectionBreak();
@@ -87,7 +92,11 @@
         Console.WriteLine($"LEFT FRONT: {car.GetFrameHeight(Corner.LF),-10:0.00}\" | RIGHT FRONT: {car.GetFrameHeight(Corner.RF),-10:0.00}\"");
         Console.WriteLine($"LEFT REAR:  {car.GetFrameHeight(Corner.LR),-10:0.00}\" | RIGHT REAR:  {car.GetFrameHeight(Corner.RR),-10:0.00}\"");
     }
-
+    public static void ShowAllTirePressures(RaceCar car)
+    {
+        Console.WriteLine($"LEFT FRONT: {car.GetTirePressure(Corner.LF),-10:0.00} PSI | RIGHT FRONT: {car.GetTirePressure(Corner.RF),-10:0.00} PSI");
+        Console.WriteLine($"LEFT REAR:  {car.GetTirePressure(Corner.LR),-10:0.00} PSI | RIGHT REAR:  {car.GetTirePressure(Corner.RR),-10:0.00} PSI");
+    }
     //HELPER UTILITIES
 
     //UI Design Methods
