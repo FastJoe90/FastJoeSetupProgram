@@ -29,9 +29,9 @@ public class CarViewModel : INotifyPropertyChanged
 
     // Calculated Stats (Read-Only for the UI)
     public float TotalWeight => _car.TotalWeight;
-    public float CrossWeight => _car.CrossWeightPercentage;
-    public float LeftSideWeight => _car.LeftSideWeightPercentage;
-    public float RearWeight => _car.RearWeightPercentage;
+    public float CrossWeightPercentage => CalculatePercentage(_car.CrossWeight);
+    public float LeftSideWeightPercentage => CalculatePercentage(_car.LeftSideWeight);
+    public float RearWeightPercentage => CalculatePercentage(_car.RearWeight);
     public float Tilt => _car.Tilt;
     public float Rake => _car.Rake;
     public float FrontStagger => _car.FrontStagger;
@@ -41,6 +41,11 @@ public class CarViewModel : INotifyPropertyChanged
     {
         get => _statusMessage;
         set { _statusMessage = value; OnPropertyChanged(); }
+    }
+    private float CalculatePercentage(float subWeight)
+    {
+        float total = TotalWeight;
+        return total > 0 ? (subWeight / total) * 100 : 0f;
     }
     public ICommand SaveSetupCommand => new RelayCommand(async () => await SaveSetup());
     public ICommand LoadSetupCommand => new RelayCommand(async () => await LoadSetup());
@@ -67,9 +72,9 @@ public class CarViewModel : INotifyPropertyChanged
                 // SECTION 1:WEIGHTS
                 sw.WriteLine($"--- CHASSIS WEIGHTS ---");
                 sw.WriteLine($"TOTAL WEIGHT : {TotalWeight} lbs");
-                sw.WriteLine($"CROSS WEIGHT : {CrossWeight:F2}%");
-                sw.WriteLine($"LEFT SIDE    : {LeftSideWeight:F2}%");
-                sw.WriteLine($"REAR WEIGHT  : {RearWeight:F2}%");
+                sw.WriteLine($"CROSS WEIGHT : {CrossWeightPercentage:F2}%");
+                sw.WriteLine($"LEFT SIDE    : {LeftSideWeightPercentage:F2}%");
+                sw.WriteLine($"REAR WEIGHT  : {RearWeightPercentage:F2}%");
                 sw.WriteLine($"LEFT FRONT: {WeightLF} lbs.| RIGHT FRONT: {WeightRF} lbs.");
                 sw.WriteLine($"LEFT REAR:  {WeightLR} lbs.| RIGHT REAR:  {WeightRR} lbs.");
                 sw.WriteLine();
@@ -213,11 +218,11 @@ public class CarViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(HeightLR));
         OnPropertyChanged(nameof(HeightRR));
         OnPropertyChanged(nameof(TotalWeight));
-        OnPropertyChanged(nameof(CrossWeight));
+        OnPropertyChanged(nameof(CrossWeightPercentage));
         OnPropertyChanged(nameof(FrontStagger));
         OnPropertyChanged(nameof(RearStagger));
-        OnPropertyChanged(nameof(LeftSideWeight));
-        OnPropertyChanged(nameof(RearWeight));
+        OnPropertyChanged(nameof(LeftSideWeightPercentage));
+        OnPropertyChanged(nameof(RearWeightPercentage));
         OnPropertyChanged(nameof(Tilt));
         OnPropertyChanged(nameof(Rake));
     }

@@ -1,18 +1,19 @@
 ﻿public class RaceCar
-{    
-    private readonly float[] _cornerWeight = new float[4]; //Pounds
-    private readonly float[] _tireDiameter = new float[4]; //Inches
-    private readonly float[] _frameHeight = new float[4]; //Inches
-    private readonly float[] _tirePressure = new float[4]; //PSI
+{
+    private readonly float[] _cornerWeight = { 0, 0, 0, 0 };//Pounds
+    private readonly float[] _tireDiameter = { 0, 0, 0, 0 }; //Inches
+    private readonly float[] _frameHeight = { 0, 0, 0, 0 }; //Inches
+    private readonly float[] _tirePressure = { 0, 0, 0, 0 }; //PSI
     public string CarName { get; set; } = "DEFAULT";
     public float TotalWeight => _cornerWeight.Sum();
-    public float CrossWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RF]) / TotalWeight * 100;
-    public float LeftSideWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.LF]) / TotalWeight * 100;
-    public float RearWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RR]) / TotalWeight * 100;
+    public float CrossWeight => _cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RF];
+    public float LeftSideWeight => _cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.LF];
+    public float RearWeight => _cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RR];
     public float FrontStagger => _tireDiameter[(int)Corner.RF] - _tireDiameter[(int)Corner.LF];
     public float RearStagger => _tireDiameter[(int)Corner.RR] - _tireDiameter[(int)Corner.LR];
-    public float Tilt => ((_frameHeight[(int)Corner.RF] + _frameHeight[(int)Corner.RR]) / 2) - ((_frameHeight[(int)Corner.LF] + _frameHeight[(int)Corner.LR]) / 2);
-    public float Rake => ((_frameHeight[(int)Corner.LR] + _frameHeight[(int)Corner.RR]) / 2) - ((_frameHeight[(int)Corner.LF] + _frameHeight[(int)Corner.RF]) / 2);
+    public float Tilt => GetAverage(_frameHeight[(int)Corner.RF], _frameHeight[(int)Corner.RR]) - GetAverage(_frameHeight[(int)Corner.LF], _frameHeight[(int)Corner.LR]);
+    public float Rake => GetAverage(_frameHeight[(int)Corner.LR], _frameHeight[(int)Corner.RR]) - GetAverage(_frameHeight[(int)Corner.LF], _frameHeight[(int)Corner.RF]);
+    public float GetAverage(float a, float b) => (a + b) / 2;   
     public float GetCornerWeight(Corner corner) => _cornerWeight[(int)corner];
     public void SetCornerWeight(Corner corner, float weight) //One = 1 Corner. ALL = ALL Corners
     {
