@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.IO;
-using System.Windows;
+
 using System.Windows.Input;
 
 public class CarViewModel : INotifyPropertyChanged

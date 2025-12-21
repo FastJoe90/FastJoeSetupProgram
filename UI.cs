@@ -1,4 +1,4 @@
-﻿public class UI
+﻿public class UI //Exclude when using WPF Project
 {
     private const int HeaderWidth = 50;
     public static void VersionInfo()

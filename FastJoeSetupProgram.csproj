@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Program.cs" />
+	  <Compile Remove="Orchestrator.cs" />
 	  <Compile Remove="SetupController.cs" />
 	  <Compile Remove="UI.cs" />
 	</ItemGroup>

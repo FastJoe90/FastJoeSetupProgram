@@ -4,7 +4,7 @@
     private readonly float[] _tireDiameter = new float[4]; //Inches
     private readonly float[] _frameHeight = new float[4]; //Inches
     private readonly float[] _tirePressure = new float[4]; //PSI
-    public string CarName { get; set; } = "Default";
+    public string CarName { get; set; } = "DEFAULT";
     public float TotalWeight => _cornerWeight.Sum();
     public float CrossWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.RF]) / TotalWeight * 100;
     public float LeftSideWeightPercentage => (_cornerWeight[(int)Corner.LR] + _cornerWeight[(int)Corner.LF]) / TotalWeight * 100;

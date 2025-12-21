@@ -1,36 +1,36 @@
-﻿public class SetupController
+﻿public class Orchestrator //ONLY USED FOR CONSOLE VERSION
 {
     //Allowing the UI to access the tools and race car class, but preventing anyone from modifying them.
     private readonly RaceCar _car = new();    
-    public SetupController() { }
-    public void StartProgram() //Main Menu Prototype. **Build in program then carry over to here**
+    public Orchestrator() { }
+    public void StartProgram() //Console Program Start
     {
         UI.VersionInfo(); 
-        ProgramLoop();
+        ConsoleLoop();
     }   
-    private void ProgramLoop() // For Console UI version.
+    private void ConsoleLoop() // For Console UI version.
     {        
         bool endProgram = false;
         while (endProgram == false)
         {
             UI.DisplayMainMenu();
             MenuOption choice = (MenuOption)UI.GetValidInt();
-            endProgram = HandleMenuChoice(choice);
+            endProgram = MenuChoice(choice);
         }
     }
-    private void BuildCar() //Creates a new RaceCar object with user set values.
+    private void CreateUserCar() //Creates a new RaceCar object with user set values.
     {
-        SetCarName();
-        SetTirePressures();
-        SetTireSizes();
-        SetCornerWeights();
-        SetFrameHeight();
+        ChangeCarName();
+        ChangeTirePressures();
+        ChangeTireSizes();
+        ChangeCornerWeights();
+        ChangeFrameHeights();
     }
-    private void SetCarName() 
+    private void ChangeCarName() 
     {
         _car.CarName = (UI.AskCarName());
     }
-    private void SetTireSizes()
+    private void ChangeTireSizes()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
@@ -38,7 +38,7 @@
             _car.SetTireSize(carCorner, tireDiameter);
         }
     }
-    private void SetTirePressures()
+    private void ChangeTirePressures()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
@@ -46,7 +46,7 @@
             _car.SetTirePressure(carCorner, tirePressure);
         }
     }
-    private void SetCornerWeights()
+    private void ChangeCornerWeights()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
@@ -54,7 +54,7 @@
             _car.SetCornerWeight(carCorner, tireWeight);
         }
     }
-    private void SetFrameHeight()
+    private void ChangeFrameHeights()
     {
         foreach (var (carCorner, tirePosition) in Corners)
         {
@@ -62,23 +62,23 @@
             _car.SetFrameHeight(carCorner, frameHeight);
         }
     }     
-    private bool HandleMenuChoice(MenuOption userInput)
+    private bool MenuChoice(MenuOption userInput)
     {
         switch (userInput)
         {
             case MenuOption.EnterSetup:
                 {
-                    BuildCar();
+                    CreateUserCar();
                     UI.PressAnyKey();
                     break;
                 }
-            case MenuOption.DisplayFullSetup:
+            case MenuOption.FullSetup:
                 {
                     UI.DisplayFullSetup(_car);
                     UI.PressAnyKey();
                     break;
                 }
-            case MenuOption.DisplayTireInfo:
+            case MenuOption.TireInfo:
                 {
                     UI.ShowAllTirePressures(_car);
                     UI.ShowFrontStagger(_car);
@@ -86,13 +86,13 @@
                     UI.PressAnyKey();
                     break;
                 }
-            case MenuOption.DisplayPercentages:
+            case MenuOption.Percentages:
                 {
                     UI.ShowAllPercentages(_car);
                     UI.PressAnyKey();
                     break;
                 }
-            case MenuOption.DisplayRakeTilt:
+            case MenuOption.RakeTilt:
                 {
                     UI.ShowRake(_car);
                     UI.ShowTilt(_car);
@@ -114,10 +114,10 @@
     private enum MenuOption
     {
         EnterSetup = 1,
-        DisplayFullSetup = 2,
-        DisplayTireInfo = 3,
-        DisplayPercentages = 4,
-        DisplayRakeTilt = 5,
+        FullSetup = 2,
+        TireInfo = 3,
+        Percentages = 4,
+        RakeTilt = 5,
         Exit = 6,
     }
     private static readonly (Corner corner, string label)[] Corners =
