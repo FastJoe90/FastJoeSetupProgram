@@ -8,7 +8,7 @@
         UI.VersionInfo(); 
         ProgramLoop();
     }   
-    private void ProgramLoop()
+    private void ProgramLoop() // For Console UI version.
     {        
         bool endProgram = false;
         while (endProgram == false)
