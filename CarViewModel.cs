@@ -1,10 +1,11 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.IO;
+﻿using System.IO;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 using System.Windows.Input;
+using System.Collections.Generic;
 
-public class CarViewModel : INotifyPropertyChanged
+public partial class CarViewModel : ObservableObject
 {
     private readonly RaceCar _car = new();   
 
@@ -22,10 +23,47 @@ public class CarViewModel : INotifyPropertyChanged
     public float PressureRF { get => _car.GetTirePressure(Corner.RF); set { _car.SetTirePressure(Corner.RF, value); Refresh(); } }
     public float PressureLR { get => _car.GetTirePressure(Corner.LR); set { _car.SetTirePressure(Corner.LR, value); Refresh(); } }
     public float PressureRR { get => _car.GetTirePressure(Corner.RR); set { _car.SetTirePressure(Corner.RR, value); Refresh(); } }
-    public float HeightLF { get => _car.GetFrameHeight(Corner.LF); set { _car.SetFrameHeight(Corner.LF, value); Refresh(); } }
-    public float HeightRF { get => _car.GetFrameHeight(Corner.RF); set { _car.SetFrameHeight(Corner.RF, value); Refresh(); } }
-    public float HeightLR { get => _car.GetFrameHeight(Corner.LR); set { _car.SetFrameHeight(Corner.LR, value); Refresh(); } }
-    public float HeightRR { get => _car.GetFrameHeight(Corner.RR); set { _car.SetFrameHeight(Corner.RR, value); Refresh(); } }
+    public float HeightLF { get => _car.GetTubeHeight(Corner.LF); set { _car.SetTubeHeight(Corner.LF, value); Refresh(); } }
+    public float HeightRF { get => _car.GetTubeHeight(Corner.RF); set { _car.SetTubeHeight(Corner.RF, value); Refresh(); } }
+    public float HeightLR { get => _car.GetTubeHeight(Corner.LR); set { _car.SetTubeHeight(Corner.LR, value); Refresh(); } }
+    public float HeightRR { get => _car.GetTubeHeight(Corner.RR); set { _car.SetTubeHeight(Corner.RR, value); Refresh(); } }
+
+    // Spring Rate Properties
+    public float BarLF { get => _car.GetBarDiameter(Corner.LF); set { _car.SetBarDiameter(Corner.LF, value); Refresh(); } }
+    public float BarRF { get => _car.GetBarDiameter(Corner.RF); set { _car.SetBarDiameter(Corner.RF, value); Refresh(); } }
+    public float BarLR { get => _car.GetBarDiameter(Corner.LR); set { _car.SetBarDiameter(Corner.LR, value); Refresh(); } }
+    public float BarRR { get => _car.GetBarDiameter(Corner.RR); set { _car.SetBarDiameter(Corner.RR, value); Refresh(); } }
+  
+    // Shock properties per corner
+    public float ShockCompressionLF { get => _car.GetShock(Corner.LF).Compression; set { _car.GetShock(Corner.LF).Compression = value; Refresh(); } }
+    public float ShockReboundBaseLF { get => _car.GetShock(Corner.LF).ReboundBase; set { _car.GetShock(Corner.LF).ReboundBase = value; Refresh(); } }
+    public int ShockClicksLF { get => _car.GetShock(Corner.LF).ReboundClicks; set { _car.GetShock(Corner.LF).ReboundClicks = value; Refresh(); } }
+    public float ShockReboundLF => _car.GetShock(Corner.LF).Rebound;
+
+    public float ShockCompressionRF { get => _car.GetShock(Corner.RF).Compression; set { _car.GetShock(Corner.RF).Compression = value; Refresh(); } }
+    public float ShockReboundBaseRF { get => _car.GetShock(Corner.RF).ReboundBase; set { _car.GetShock(Corner.RF).ReboundBase = value; Refresh(); } }
+    public int ShockClicksRF { get => _car.GetShock(Corner.RF).ReboundClicks; set { _car.GetShock(Corner.RF).ReboundClicks = value; Refresh(); } }
+    public float ShockReboundRF => _car.GetShock(Corner.RF).Rebound;
+
+    public float ShockCompressionLR { get => _car.GetShock(Corner.LR).Compression; set { _car.GetShock(Corner.LR).Compression = value; Refresh(); } }
+    public float ShockReboundBaseLR { get => _car.GetShock(Corner.LR).ReboundBase; set { _car.GetShock(Corner.LR).ReboundBase = value; Refresh(); } }
+    public int ShockClicksLR { get => _car.GetShock(Corner.LR).ReboundClicks; set { _car.GetShock(Corner.LR).ReboundClicks = value; Refresh(); } }
+    public float ShockReboundLR => _car.GetShock(Corner.LR).Rebound;
+
+    public float ShockCompressionRR { get => _car.GetShock(Corner.RR).Compression; set { _car.GetShock(Corner.RR).Compression = value; Refresh(); } }
+    public float ShockReboundBaseRR { get => _car.GetShock(Corner.RR).ReboundBase; set { _car.GetShock(Corner.RR).ReboundBase = value; Refresh(); } }
+    public int ShockClicksRR { get => _car.GetShock(Corner.RR).ReboundClicks; set { _car.GetShock(Corner.RR).ReboundClicks = value; Refresh(); } }
+    public float ShockReboundRR => _car.GetShock(Corner.RR).Rebound;
+
+    // Commands to adjust clicks
+    public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).DecrementClick(); Refresh(); });
 
     // Calculated Stats (Read-Only for the UI)
     public float TotalWeight => _car.TotalWeight;
@@ -36,19 +74,19 @@ public class CarViewModel : INotifyPropertyChanged
     public float Rake => _car.Rake;
     public float FrontStagger => _car.FrontStagger;
     public float RearStagger => _car.RearStagger;
-    private string _statusMessage;
+    private string _statusMessage = string.Empty;
     public string StatusMessage
     {
         get => _statusMessage;
-        set { _statusMessage = value; OnPropertyChanged(); }
+        set => SetProperty(ref _statusMessage, value);
     }
     private float CalculatePercentage(float subWeight)
     {
         float total = TotalWeight;
         return total > 0 ? (subWeight / total) * 100 : 0f;
     }
-    public ICommand SaveSetupCommand => new RelayCommand(async () => await SaveSetup());
-    public ICommand LoadSetupCommand => new RelayCommand(async () => await LoadSetup());
+    public IAsyncRelayCommand SaveSetupCommand => new AsyncRelayCommand(SaveSetup);
+    public IAsyncRelayCommand LoadSetupCommand => new AsyncRelayCommand(LoadSetup);
     private async Task SaveSetup()
     {
         try
@@ -94,7 +132,7 @@ public class CarViewModel : INotifyPropertyChanged
                 sw.WriteLine();
 
                 // SECTION 3 : CHASSIS DETAILS
-                sw.WriteLine($"--- FRAME HEIGHTS ---");
+                sw.WriteLine($"--- TUBE HEIGHTS ---");
                 sw.WriteLine($"LEFT FRONT: {HeightLF}\" | RIGHT FRONT: {HeightRF}\"");
                 sw.WriteLine($"LEFT REAR:  {HeightLR}\" | RIGHT REAR:  {HeightRR}\"");
                 sw.WriteLine();
@@ -102,6 +140,24 @@ public class CarViewModel : INotifyPropertyChanged
                 sw.WriteLine($"RAKE : {Rake:F2}\"");
                 sw.WriteLine($"TILT : {Tilt:F2}\"");
                 sw.WriteLine();               
+
+                // SPRING RATES
+                sw.WriteLine($"--- TORSION BAR DIAMETER ---");
+                sw.WriteLine($"LEFT FRONT: {BarLF} in | RIGHT FRONT: {BarRF} in");
+                sw.WriteLine($"LEFT REAR:  {BarLR} in | RIGHT REAR:  {BarRR} in");
+                sw.WriteLine();
+
+                // SHOCK SETTINGS
+                sw.WriteLine($"--- SHOCKS ---");
+                sw.WriteLine($"LEFT FRONT: Compression: {ShockCompressionLF} | ReboundBase: {ShockReboundBaseLF} | Clicks: {ShockClicksLF} | Rebound: {ShockReboundLF}");
+                sw.WriteLine($"LEFT FRONT VALVING: {_car.GetShock(Corner.LF).ExportValvingSpec()}");
+                sw.WriteLine($"RIGHT FRONT: Compression: {ShockCompressionRF} | ReboundBase: {ShockReboundBaseRF} | Clicks: {ShockClicksRF} | Rebound: {ShockReboundRF}");
+                sw.WriteLine($"RIGHT FRONT VALVING: {_car.GetShock(Corner.RF).ExportValvingSpec()}");
+                sw.WriteLine($"LEFT REAR: Compression: {ShockCompressionLR} | ReboundBase: {ShockReboundBaseLR} | Clicks: {ShockClicksLR} | Rebound: {ShockReboundLR}");
+                sw.WriteLine($"LEFT REAR VALVING: {_car.GetShock(Corner.LR).ExportValvingSpec()}");
+                sw.WriteLine($"RIGHT REAR: Compression: {ShockCompressionRR} | ReboundBase: {ShockReboundBaseRR} | Clicks: {ShockClicksRR} | Rebound: {ShockReboundRR}");
+                sw.WriteLine($"RIGHT REAR VALVING: {_car.GetShock(Corner.RR).ExportValvingSpec()}");
+                sw.WriteLine();
 
                 sw.WriteLine($"===================================================");
                 sw.WriteLine($"NOTES: ");
@@ -112,12 +168,41 @@ public class CarViewModel : INotifyPropertyChanged
             await Task.Delay(3000);
             StatusMessage = "";
         }
+        catch (UnauthorizedAccessException)
+        {
+            StatusMessage = "❌ SAVE FAILED: Access denied";
+            await Task.Delay(3000);
+            StatusMessage = "";
+        }
+        catch (PathTooLongException)
+        {
+            StatusMessage = "❌ SAVE FAILED: File path too long";
+            await Task.Delay(3000);
+            StatusMessage = "";
+        }
+        catch (DirectoryNotFoundException)
+        {
+            StatusMessage = "❌ SAVE FAILED: Directory not found";
+            await Task.Delay(3000);
+            StatusMessage = "";
+        }
+        catch (IOException ex)
+        {
+            StatusMessage = "❌ SAVE FAILED: I/O error";
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Task.Delay(3000);
+            StatusMessage = "";
+        }
         catch (Exception ex)
         {
             StatusMessage = "❌ SAVE FAILED";
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+            await Task.Delay(3000);
+            StatusMessage = "";
         }
     }
 
+    // Replace LoadSetup method with corrected, robust parsing and error handling
     private async Task LoadSetup()
     {
         var openFileDialog = new Microsoft.Win32.OpenFileDialog { Filter = "Text files (*.txt)|*.txt" };
@@ -131,8 +216,15 @@ public class CarViewModel : INotifyPropertyChanged
 
                 foreach (string line in lines)
                 {
+                    if (string.IsNullOrWhiteSpace(line)) continue;
+
                     if (line.StartsWith("---")) { currentSection = line; continue; }
-                    if (line.Contains("SETUP NAME :")) CarName = line.Split(':').Last().Trim();
+
+                    if (line.Contains("SETUP NAME :"))
+                    {
+                        CarName = line.Split(':').Last().Trim();
+                        continue;
+                    }
 
                     // Parsing logic based on which section we are currently in
                     if (currentSection.Contains("CHASSIS WEIGHTS"))
@@ -156,12 +248,71 @@ public class CarViewModel : INotifyPropertyChanged
                         if (line.Contains("LEFT REAR:")) DiameterLR = ExtractDoubleValue(line, "LEFT REAR:", "\"");
                         if (line.Contains("RIGHT REAR:")) DiameterRR = ExtractDoubleValue(line, "RIGHT REAR:", "\"");
                     }
-                    else if (currentSection.Contains("FRAME HEIGHTS"))
+                    else if (currentSection.Contains("TUBE HEIGHTS") || currentSection.Contains("TUBE HEIGHT"))
                     {
                         if (line.Contains("LEFT FRONT:")) HeightLF = ExtractDoubleValue(line, "LEFT FRONT:", "\"");
                         if (line.Contains("RIGHT FRONT:")) HeightRF = ExtractDoubleValue(line, "RIGHT FRONT:", "\"");
                         if (line.Contains("LEFT REAR:")) HeightLR = ExtractDoubleValue(line, "LEFT REAR:", "\"");
                         if (line.Contains("RIGHT REAR:")) HeightRR = ExtractDoubleValue(line, "RIGHT REAR:", "\"");
+                    }
+                    else if (currentSection.Contains("TORSION BAR DIAMETER") || currentSection.Contains("BAR DIAMETER"))
+                    {
+                        // Torsion bar diameter saved in inches
+                        if (line.Contains("LEFT FRONT:")) BarLF = ExtractDoubleValue(line, "LEFT FRONT:", "in");
+                        if (line.Contains("RIGHT FRONT:")) BarRF = ExtractDoubleValue(line, "RIGHT FRONT:", "in");
+                        if (line.Contains("LEFT REAR:")) BarLR = ExtractDoubleValue(line, "LEFT REAR:", "in");
+                        if (line.Contains("RIGHT REAR:")) BarRR = ExtractDoubleValue(line, "RIGHT REAR:", "in");
+                    }
+                    else if (currentSection.Contains("SHOCKS"))
+                    {
+                        // Check VALVING lines first (they contain the corner name too)
+                        if (line.Contains("LEFT FRONT VALVING:"))
+                        {
+                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
+                            _car.GetShock(Corner.LF).ImportValvingSpec(spec);
+                        }
+                        else if (line.Contains("LEFT FRONT:"))
+                        {
+                            ShockCompressionLF = ExtractDoubleValue(line, "Compression:", "|");
+                            ShockReboundBaseLF = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockClicksLF = ExtractIntValue(line, "Clicks:", "|");
+                        }
+
+                        if (line.Contains("RIGHT FRONT VALVING:"))
+                        {
+                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
+                            _car.GetShock(Corner.RF).ImportValvingSpec(spec);
+                        }
+                        else if (line.Contains("RIGHT FRONT:"))
+                        {
+                            ShockCompressionRF = ExtractDoubleValue(line, "Compression:", "|");
+                            ShockReboundBaseRF = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockClicksRF = ExtractIntValue(line, "Clicks:", "|");
+                        }
+
+                        if (line.Contains("LEFT REAR VALVING:"))
+                        {
+                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
+                            _car.GetShock(Corner.LR).ImportValvingSpec(spec);
+                        }
+                        else if (line.Contains("LEFT REAR:"))
+                        {
+                            ShockCompressionLR = ExtractDoubleValue(line, "Compression:", "|");
+                            ShockReboundBaseLR = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockClicksLR = ExtractIntValue(line, "Clicks:", "|");
+                        }
+
+                        if (line.Contains("RIGHT REAR VALVING:"))
+                        {
+                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
+                            _car.GetShock(Corner.RR).ImportValvingSpec(spec);
+                        }
+                        else if (line.Contains("RIGHT REAR:"))
+                        {
+                            ShockCompressionRR = ExtractDoubleValue(line, "Compression:", "|");
+                            ShockReboundBaseRR = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockClicksRR = ExtractIntValue(line, "Clicks:", "|");
+                        }
                     }
                 }
 
@@ -170,7 +321,13 @@ public class CarViewModel : INotifyPropertyChanged
                 await Task.Delay(3000);
                 StatusMessage = "";
             }
-            catch { StatusMessage = "❌ LOAD ERROR"; }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                StatusMessage = "❌ LOAD ERROR";
+                await Task.Delay(3000);
+                StatusMessage = "";
+            }
         }
     }
 
@@ -180,24 +337,29 @@ public class CarViewModel : INotifyPropertyChanged
         try
         {
             int start = line.IndexOf(label) + label.Length;
-            int end = line.IndexOf(unit, start);
+            int end = (string.IsNullOrEmpty(unit)) ? line.Length : line.IndexOf(unit, start);
+            if (end < 0) end = line.Length;
             string valPart = line.Substring(start, end - start).Trim();
             return float.Parse(valPart);
         }
         catch { return 0; }
     }
 
-
-
-    // Simple RelayCommand helper (Put this at the bottom of your file or in a new file)
-    public class RelayCommand : ICommand
+    private int ExtractIntValue(string line, string label, string unit)
     {
-        private readonly Action _execute;
-        public RelayCommand(Action execute) => _execute = execute;
-        public bool CanExecute(object parameter) => true;
-        public void Execute(object parameter) => _execute();
-        public event EventHandler CanExecuteChanged;
+        try
+        {
+            int start = line.IndexOf(label) + label.Length;
+            int end = (string.IsNullOrEmpty(unit)) ? line.Length : line.IndexOf(unit, start);
+            if (end < 0) end = line.Length;
+            string valPart = line.Substring(start, end - start).Trim();
+            return int.Parse(valPart);
+        }
+        catch { return 0; }
     }
+
+
+
     private void Refresh()
     {
         OnPropertyChanged(nameof(CarName));
@@ -217,17 +379,35 @@ public class CarViewModel : INotifyPropertyChanged
         OnPropertyChanged(nameof(HeightRF));
         OnPropertyChanged(nameof(HeightLR));
         OnPropertyChanged(nameof(HeightRR));
+        OnPropertyChanged(nameof(BarLF));
+        OnPropertyChanged(nameof(BarRF));
+        OnPropertyChanged(nameof(BarLR));
+        OnPropertyChanged(nameof(BarRR));      
+        OnPropertyChanged(nameof(ShockCompressionLF));
+        OnPropertyChanged(nameof(ShockReboundBaseLF));
+        OnPropertyChanged(nameof(ShockClicksLF));
+        OnPropertyChanged(nameof(ShockReboundLF));
+        OnPropertyChanged(nameof(ShockCompressionRF));
+        OnPropertyChanged(nameof(ShockReboundBaseRF));
+        OnPropertyChanged(nameof(ShockClicksRF));
+        OnPropertyChanged(nameof(ShockReboundRF));
+        OnPropertyChanged(nameof(ShockCompressionLR));
+        OnPropertyChanged(nameof(ShockReboundBaseLR));
+        OnPropertyChanged(nameof(ShockClicksLR));
+        OnPropertyChanged(nameof(ShockReboundLR));
+        OnPropertyChanged(nameof(ShockCompressionRR));
+        OnPropertyChanged(nameof(ShockReboundBaseRR));
+        OnPropertyChanged(nameof(ShockClicksRR));
+        OnPropertyChanged(nameof(ShockReboundRR));
+
+        // Calculated stats
         OnPropertyChanged(nameof(TotalWeight));
         OnPropertyChanged(nameof(CrossWeightPercentage));
-        OnPropertyChanged(nameof(FrontStagger));
-        OnPropertyChanged(nameof(RearStagger));
         OnPropertyChanged(nameof(LeftSideWeightPercentage));
         OnPropertyChanged(nameof(RearWeightPercentage));
+        OnPropertyChanged(nameof(FrontStagger));
+        OnPropertyChanged(nameof(RearStagger));
         OnPropertyChanged(nameof(Tilt));
         OnPropertyChanged(nameof(Rake));
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string name = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 }
