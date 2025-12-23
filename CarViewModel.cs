@@ -2,12 +2,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-using System.Windows.Input;
-using System.Collections.Generic;
 
 public partial class CarViewModel : ObservableObject
 {
-    private readonly RaceCar _car = new();   
+    private readonly RaceCar _car = new();
 
     // Corner Weight Properties
     public string CarName { get => _car.CarName; set { _car.CarName = value; Refresh(); } }
@@ -33,25 +31,25 @@ public partial class CarViewModel : ObservableObject
     public float BarRF { get => _car.GetBarDiameter(Corner.RF); set { _car.SetBarDiameter(Corner.RF, value); Refresh(); } }
     public float BarLR { get => _car.GetBarDiameter(Corner.LR); set { _car.SetBarDiameter(Corner.LR, value); Refresh(); } }
     public float BarRR { get => _car.GetBarDiameter(Corner.RR); set { _car.SetBarDiameter(Corner.RR, value); Refresh(); } }
-  
+
     // Shock properties per corner
     public float ShockCompressionLF { get => _car.GetShock(Corner.LF).Compression; set { _car.GetShock(Corner.LF).Compression = value; Refresh(); } }
-    public float ShockReboundBaseLF { get => _car.GetShock(Corner.LF).ReboundBase; set { _car.GetShock(Corner.LF).ReboundBase = value; Refresh(); } }
+    public float ShockReboundBaseLF { get => _car.GetShock(Corner.LF).Rebound; set { _car.GetShock(Corner.LF).Rebound = value; Refresh(); } }
     public int ShockClicksLF { get => _car.GetShock(Corner.LF).ReboundClicks; set { _car.GetShock(Corner.LF).ReboundClicks = value; Refresh(); } }
     public float ShockReboundLF => _car.GetShock(Corner.LF).Rebound;
 
     public float ShockCompressionRF { get => _car.GetShock(Corner.RF).Compression; set { _car.GetShock(Corner.RF).Compression = value; Refresh(); } }
-    public float ShockReboundBaseRF { get => _car.GetShock(Corner.RF).ReboundBase; set { _car.GetShock(Corner.RF).ReboundBase = value; Refresh(); } }
+    public float ShockReboundBaseRF { get => _car.GetShock(Corner.RF).Rebound; set { _car.GetShock(Corner.RF).Rebound = value; Refresh(); } }
     public int ShockClicksRF { get => _car.GetShock(Corner.RF).ReboundClicks; set { _car.GetShock(Corner.RF).ReboundClicks = value; Refresh(); } }
     public float ShockReboundRF => _car.GetShock(Corner.RF).Rebound;
 
     public float ShockCompressionLR { get => _car.GetShock(Corner.LR).Compression; set { _car.GetShock(Corner.LR).Compression = value; Refresh(); } }
-    public float ShockReboundBaseLR { get => _car.GetShock(Corner.LR).ReboundBase; set { _car.GetShock(Corner.LR).ReboundBase = value; Refresh(); } }
+    public float ShockReboundBaseLR { get => _car.GetShock(Corner.LR).Rebound; set { _car.GetShock(Corner.LR).Rebound = value; Refresh(); } }
     public int ShockClicksLR { get => _car.GetShock(Corner.LR).ReboundClicks; set { _car.GetShock(Corner.LR).ReboundClicks = value; Refresh(); } }
     public float ShockReboundLR => _car.GetShock(Corner.LR).Rebound;
 
     public float ShockCompressionRR { get => _car.GetShock(Corner.RR).Compression; set { _car.GetShock(Corner.RR).Compression = value; Refresh(); } }
-    public float ShockReboundBaseRR { get => _car.GetShock(Corner.RR).ReboundBase; set { _car.GetShock(Corner.RR).ReboundBase = value; Refresh(); } }
+    public float ShockReboundBaseRR { get => _car.GetShock(Corner.RR).Rebound; set { _car.GetShock(Corner.RR).Rebound = value; Refresh(); } }
     public int ShockClicksRR { get => _car.GetShock(Corner.RR).ReboundClicks; set { _car.GetShock(Corner.RR).ReboundClicks = value; Refresh(); } }
     public float ShockReboundRR => _car.GetShock(Corner.RR).Rebound;
 
@@ -139,7 +137,7 @@ public partial class CarViewModel : ObservableObject
                 sw.WriteLine($"--- RAKE AND TILT ---");
                 sw.WriteLine($"RAKE : {Rake:F2}\"");
                 sw.WriteLine($"TILT : {Tilt:F2}\"");
-                sw.WriteLine();               
+                sw.WriteLine();
 
                 // SPRING RATES
                 sw.WriteLine($"--- TORSION BAR DIAMETER ---");
@@ -150,13 +148,9 @@ public partial class CarViewModel : ObservableObject
                 // SHOCK SETTINGS
                 sw.WriteLine($"--- SHOCKS ---");
                 sw.WriteLine($"LEFT FRONT: Compression: {ShockCompressionLF} | ReboundBase: {ShockReboundBaseLF} | Clicks: {ShockClicksLF} | Rebound: {ShockReboundLF}");
-                sw.WriteLine($"LEFT FRONT VALVING: {_car.GetShock(Corner.LF).ExportValvingSpec()}");
                 sw.WriteLine($"RIGHT FRONT: Compression: {ShockCompressionRF} | ReboundBase: {ShockReboundBaseRF} | Clicks: {ShockClicksRF} | Rebound: {ShockReboundRF}");
-                sw.WriteLine($"RIGHT FRONT VALVING: {_car.GetShock(Corner.RF).ExportValvingSpec()}");
                 sw.WriteLine($"LEFT REAR: Compression: {ShockCompressionLR} | ReboundBase: {ShockReboundBaseLR} | Clicks: {ShockClicksLR} | Rebound: {ShockReboundLR}");
-                sw.WriteLine($"LEFT REAR VALVING: {_car.GetShock(Corner.LR).ExportValvingSpec()}");
                 sw.WriteLine($"RIGHT REAR: Compression: {ShockCompressionRR} | ReboundBase: {ShockReboundBaseRR} | Clicks: {ShockClicksRR} | Rebound: {ShockReboundRR}");
-                sw.WriteLine($"RIGHT REAR VALVING: {_car.GetShock(Corner.RR).ExportValvingSpec()}");
                 sw.WriteLine();
 
                 sw.WriteLine($"===================================================");
@@ -265,49 +259,29 @@ public partial class CarViewModel : ObservableObject
                     }
                     else if (currentSection.Contains("SHOCKS"))
                     {
-                        // Check VALVING lines first (they contain the corner name too)
-                        if (line.Contains("LEFT FRONT VALVING:"))
-                        {
-                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
-                            _car.GetShock(Corner.LF).ImportValvingSpec(spec);
-                        }
-                        else if (line.Contains("LEFT FRONT:"))
+                        // shock lines: parse compression, reboundbase, clicks from the summary lines
+                        if (line.Contains("LEFT FRONT:"))
                         {
                             ShockCompressionLF = ExtractDoubleValue(line, "Compression:", "|");
                             ShockReboundBaseLF = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksLF = ExtractIntValue(line, "Clicks:", "|");
                         }
 
-                        if (line.Contains("RIGHT FRONT VALVING:"))
-                        {
-                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
-                            _car.GetShock(Corner.RF).ImportValvingSpec(spec);
-                        }
-                        else if (line.Contains("RIGHT FRONT:"))
+                        if (line.Contains("RIGHT FRONT:"))
                         {
                             ShockCompressionRF = ExtractDoubleValue(line, "Compression:", "|");
                             ShockReboundBaseRF = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksRF = ExtractIntValue(line, "Clicks:", "|");
                         }
 
-                        if (line.Contains("LEFT REAR VALVING:"))
-                        {
-                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
-                            _car.GetShock(Corner.LR).ImportValvingSpec(spec);
-                        }
-                        else if (line.Contains("LEFT REAR:"))
+                        if (line.Contains("LEFT REAR:"))
                         {
                             ShockCompressionLR = ExtractDoubleValue(line, "Compression:", "|");
                             ShockReboundBaseLR = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksLR = ExtractIntValue(line, "Clicks:", "|");
                         }
 
-                        if (line.Contains("RIGHT REAR VALVING:"))
-                        {
-                            var spec = line.Split(new[] { ':' }, 2)[1].Trim();
-                            _car.GetShock(Corner.RR).ImportValvingSpec(spec);
-                        }
-                        else if (line.Contains("RIGHT REAR:"))
+                        if (line.Contains("RIGHT REAR:"))
                         {
                             ShockCompressionRR = ExtractDoubleValue(line, "Compression:", "|");
                             ShockReboundBaseRR = ExtractDoubleValue(line, "ReboundBase:", "|");
@@ -382,7 +356,7 @@ public partial class CarViewModel : ObservableObject
         OnPropertyChanged(nameof(BarLF));
         OnPropertyChanged(nameof(BarRF));
         OnPropertyChanged(nameof(BarLR));
-        OnPropertyChanged(nameof(BarRR));      
+        OnPropertyChanged(nameof(BarRR));
         OnPropertyChanged(nameof(ShockCompressionLF));
         OnPropertyChanged(nameof(ShockReboundBaseLF));
         OnPropertyChanged(nameof(ShockClicksLF));

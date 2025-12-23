@@ -13,11 +13,11 @@
 
     public RaceCar()
     {
-        // initialize shocks using transcription presets
-        _shocks[(int)Corner.LF] = Shock.CreatePresetLF();
-        _shocks[(int)Corner.RF] = Shock.CreatePresetRF();
-        _shocks[(int)Corner.LR] = Shock.CreatePresetLR();
-        _shocks[(int)Corner.RR] = Shock.CreatePresetRR();
+        // initialize shocks to default instances
+        _shocks[(int)Corner.LF] = new Shock();
+        _shocks[(int)Corner.RF] = new Shock();
+        _shocks[(int)Corner.LR] = new Shock();
+        _shocks[(int)Corner.RR] = new Shock();
     }
 
     public float TotalWeight => _cornerWeight.Sum();
