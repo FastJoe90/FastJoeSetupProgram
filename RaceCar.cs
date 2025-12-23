@@ -7,17 +7,16 @@
     private readonly float[] _barDiameter = { 0, 0, 0, 0 }; // inches (torsion bar diameter per corner)
 
     // Per-corner shocks
-    private readonly Shock[] _shocks = new Shock[4];
+    private readonly Shock[] _shocks =
+    {
+        new Shock(), new Shock(), new Shock(), new Shock(),
+    };
 
     public string CarName { get; set; } = "DEFAULT";
 
     public RaceCar()
     {
-        // initialize shocks to default instances
-        _shocks[(int)Corner.LF] = new Shock();
-        _shocks[(int)Corner.RF] = new Shock();
-        _shocks[(int)Corner.LR] = new Shock();
-        _shocks[(int)Corner.RR] = new Shock();
+       
     }
 
     public float TotalWeight => _cornerWeight.Sum();
@@ -31,7 +30,7 @@
 
     // Expose shocks per corner
     public Shock GetShock(Corner corner) => _shocks[(int)corner];
-    public void SetShock(Corner corner, Shock shock) => _shocks[(int)corner] = shock ?? new Shock();
+    public void SetShock(Corner corner, Shock shock) => _shocks[(int)corner] = shock;
 
     public float GetAverage(float a, float b) => (a + b) / 2;   
     public float GetCornerWeight(Corner corner) => _cornerWeight[(int)corner];
