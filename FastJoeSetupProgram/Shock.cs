@@ -1,8 +1,11 @@
 public class Shock
 {   
     public float Rebound { get; set; }   
-    public float Compression { get; set; }   
-    public int MaxNegativeClicks { get; init; } = 26; //Controls the range of clicks in the UI.
+    public float Compression { get; set; } 
+    
+    //setting for Micro Sprint shock (which is base vehicle we are working on
+    //Consider different values when working on different vehicles (Or no adjustment at all)
+    public int MaxNegativeClicks { get; init; } = 26;  
 
     private int _reboundClicks; 
     public int ReboundClicks
