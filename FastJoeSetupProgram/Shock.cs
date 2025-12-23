@@ -24,9 +24,8 @@ public class Shock
         MaxNegativeClicks = maxNegativeClicks;
         _reboundClicks = Clamp(initialClicks, -MaxNegativeClicks, 0);
     }  
-    public void IncrementClick() => ReboundClicks = ReboundClicks + 1; // clamp ensures <= 0   
-    public void DecrementClick() => ReboundClicks = ReboundClicks - 1; // clamp ensures >= -MaxNegativeClicks  
-   
+    public void IncrementClick() => ReboundClicks = ReboundClicks + 1; 
+    public void DecrementClick() => ReboundClicks = ReboundClicks - 1; 
     private static int Clamp(int v, int lo, int hi) => v < lo ? lo : (v > hi ? hi : v);
 
     public override string ToString() => $"Compression={Compression}, ReboundBase={Rebound}, Clicks={ReboundClicks}, Rebound={Rebound:F2}";
