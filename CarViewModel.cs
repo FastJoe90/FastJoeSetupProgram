@@ -34,24 +34,24 @@ public partial class CarViewModel : ObservableObject
 
     // Shock properties per corner
     public float ShockCompressionLF { get => _car.GetShock(Corner.LF).Compression; set { _car.GetShock(Corner.LF).Compression = value; Refresh(); } }
-    public float ShockReboundBaseLF { get => _car.GetShock(Corner.LF).Rebound; set { _car.GetShock(Corner.LF).Rebound = value; Refresh(); } }
+    public float ShockReboundLF { get => _car.GetShock(Corner.LF).Rebound; set { _car.GetShock(Corner.LF).Rebound = value; Refresh(); } }
     public int ShockClicksLF { get => _car.GetShock(Corner.LF).ReboundClicks; set { _car.GetShock(Corner.LF).ReboundClicks = value; Refresh(); } }
-    public float ShockReboundLF => _car.GetShock(Corner.LF).Rebound;
+  
 
     public float ShockCompressionRF { get => _car.GetShock(Corner.RF).Compression; set { _car.GetShock(Corner.RF).Compression = value; Refresh(); } }
-    public float ShockReboundBaseRF { get => _car.GetShock(Corner.RF).Rebound; set { _car.GetShock(Corner.RF).Rebound = value; Refresh(); } }
+    public float ShockReboundRF { get => _car.GetShock(Corner.RF).Rebound; set { _car.GetShock(Corner.RF).Rebound = value; Refresh(); } }
     public int ShockClicksRF { get => _car.GetShock(Corner.RF).ReboundClicks; set { _car.GetShock(Corner.RF).ReboundClicks = value; Refresh(); } }
-    public float ShockReboundRF => _car.GetShock(Corner.RF).Rebound;
+   
 
     public float ShockCompressionLR { get => _car.GetShock(Corner.LR).Compression; set { _car.GetShock(Corner.LR).Compression = value; Refresh(); } }
-    public float ShockReboundBaseLR { get => _car.GetShock(Corner.LR).Rebound; set { _car.GetShock(Corner.LR).Rebound = value; Refresh(); } }
+    public float ShockReboundLR { get => _car.GetShock(Corner.LR).Rebound; set { _car.GetShock(Corner.LR).Rebound = value; Refresh(); } }
     public int ShockClicksLR { get => _car.GetShock(Corner.LR).ReboundClicks; set { _car.GetShock(Corner.LR).ReboundClicks = value; Refresh(); } }
-    public float ShockReboundLR => _car.GetShock(Corner.LR).Rebound;
+    
 
     public float ShockCompressionRR { get => _car.GetShock(Corner.RR).Compression; set { _car.GetShock(Corner.RR).Compression = value; Refresh(); } }
-    public float ShockReboundBaseRR { get => _car.GetShock(Corner.RR).Rebound; set { _car.GetShock(Corner.RR).Rebound = value; Refresh(); } }
+    public float ShockReboundRR { get => _car.GetShock(Corner.RR).Rebound; set { _car.GetShock(Corner.RR).Rebound = value; Refresh(); } }
     public int ShockClicksRR { get => _car.GetShock(Corner.RR).ReboundClicks; set { _car.GetShock(Corner.RR).ReboundClicks = value; Refresh(); } }
-    public float ShockReboundRR => _car.GetShock(Corner.RR).Rebound;
+   
 
     // Commands to adjust clicks
     public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).IncrementClick(); Refresh(); });
@@ -147,10 +147,10 @@ public partial class CarViewModel : ObservableObject
 
                 // SHOCK SETTINGS
                 sw.WriteLine($"--- SHOCKS ---");
-                sw.WriteLine($"LEFT FRONT: Compression: {ShockCompressionLF} | ReboundBase: {ShockReboundBaseLF} | Clicks: {ShockClicksLF} | Rebound: {ShockReboundLF}");
-                sw.WriteLine($"RIGHT FRONT: Compression: {ShockCompressionRF} | ReboundBase: {ShockReboundBaseRF} | Clicks: {ShockClicksRF} | Rebound: {ShockReboundRF}");
-                sw.WriteLine($"LEFT REAR: Compression: {ShockCompressionLR} | ReboundBase: {ShockReboundBaseLR} | Clicks: {ShockClicksLR} | Rebound: {ShockReboundLR}");
-                sw.WriteLine($"RIGHT REAR: Compression: {ShockCompressionRR} | ReboundBase: {ShockReboundBaseRR} | Clicks: {ShockClicksRR} | Rebound: {ShockReboundRR}");
+                sw.WriteLine($"LEFT FRONT: Compression: {ShockCompressionLF} | Rebound: {ShockReboundLF} | Clicks: {ShockClicksLF}");
+                sw.WriteLine($"RIGHT FRONT: Compression: {ShockCompressionRF} | Rebound: {ShockReboundRF} | Clicks: {ShockClicksRF}");
+                sw.WriteLine($"LEFT REAR: Compression: {ShockCompressionLR} | Rebound: {ShockReboundLR} | Clicks: {ShockClicksLR}");
+                sw.WriteLine($"RIGHT REAR: Compression: {ShockCompressionRR} | Rebound: {ShockReboundRR} | Clicks: {ShockClicksRR}");
                 sw.WriteLine();
 
                 sw.WriteLine($"===================================================");
@@ -263,28 +263,28 @@ public partial class CarViewModel : ObservableObject
                         if (line.Contains("LEFT FRONT:"))
                         {
                             ShockCompressionLF = ExtractDoubleValue(line, "Compression:", "|");
-                            ShockReboundBaseLF = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockReboundLF = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksLF = ExtractIntValue(line, "Clicks:", "|");
                         }
 
                         if (line.Contains("RIGHT FRONT:"))
                         {
                             ShockCompressionRF = ExtractDoubleValue(line, "Compression:", "|");
-                            ShockReboundBaseRF = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockReboundRF = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksRF = ExtractIntValue(line, "Clicks:", "|");
                         }
 
                         if (line.Contains("LEFT REAR:"))
                         {
                             ShockCompressionLR = ExtractDoubleValue(line, "Compression:", "|");
-                            ShockReboundBaseLR = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockReboundLR = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksLR = ExtractIntValue(line, "Clicks:", "|");
                         }
 
                         if (line.Contains("RIGHT REAR:"))
                         {
                             ShockCompressionRR = ExtractDoubleValue(line, "Compression:", "|");
-                            ShockReboundBaseRR = ExtractDoubleValue(line, "ReboundBase:", "|");
+                            ShockReboundRR = ExtractDoubleValue(line, "ReboundBase:", "|");
                             ShockClicksRR = ExtractIntValue(line, "Clicks:", "|");
                         }
                     }
@@ -358,19 +358,19 @@ public partial class CarViewModel : ObservableObject
         OnPropertyChanged(nameof(BarLR));
         OnPropertyChanged(nameof(BarRR));
         OnPropertyChanged(nameof(ShockCompressionLF));
-        OnPropertyChanged(nameof(ShockReboundBaseLF));
+        OnPropertyChanged(nameof(ShockReboundLF));
         OnPropertyChanged(nameof(ShockClicksLF));
         OnPropertyChanged(nameof(ShockReboundLF));
         OnPropertyChanged(nameof(ShockCompressionRF));
-        OnPropertyChanged(nameof(ShockReboundBaseRF));
+        OnPropertyChanged(nameof(ShockReboundRF));
         OnPropertyChanged(nameof(ShockClicksRF));
         OnPropertyChanged(nameof(ShockReboundRF));
         OnPropertyChanged(nameof(ShockCompressionLR));
-        OnPropertyChanged(nameof(ShockReboundBaseLR));
+        OnPropertyChanged(nameof(ShockReboundLR));
         OnPropertyChanged(nameof(ShockClicksLR));
         OnPropertyChanged(nameof(ShockReboundLR));
         OnPropertyChanged(nameof(ShockCompressionRR));
-        OnPropertyChanged(nameof(ShockReboundBaseRR));
+        OnPropertyChanged(nameof(ShockReboundRR));
         OnPropertyChanged(nameof(ShockClicksRR));
         OnPropertyChanged(nameof(ShockReboundRR));
 
