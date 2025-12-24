@@ -1,27 +1,24 @@
 ﻿
-public class Wheel
+public class Tire
 {
-    public float Spacing { get; private set; } //Measured differently on different style vehicles. For now, this will work. In Inches.   
+     //Measured differently on different style vehicles. For now, this will work. In Inches.   
     public float TirePressure { get; private set; } //Measured in PSI.
     public float TireDiameter { get; private set; } //Measured in inches.
-    private float SpacerSize { get; init; } = 0.25f;
-    private float PressureIncrement { get; init; } = 0.5f;
-    private float DiameterIncrement { get; init; } = 0.125f;
-   
-
-    public Wheel(float spacing = 0, float pressure = 0, float diameter = 0)
-    {
-        Spacing = spacing;
+    private float PressureIncrement { get; } = 0.5f; //Typical pressure adjustments would be done by half pound. Adjust to needs.
+    private float DiameterIncrement { get; } = 0.125f; //Tire stagger generally is measure in 1/8ths. Again, adjust to needs.
+    public Tire(float pressure = 0, float diameter = 0)
+    {     
         TirePressure = pressure;
         TireDiameter = diameter;
-    }
-    public void SetWheelSpacing(float spacing) => Spacing = Math.Max(0, spacing);
-    public void AddSpacer() => Spacing = Math.Max(0, Spacing + SpacerSize);
-    public void RemoveSpacer() => Spacing = Math.Max(0, Spacing - SpacerSize);
+    }  
+    //For setting an initial pressure.
     public void SetPressure(float pressure) => TirePressure = Math.Max(0, pressure);
+    //For adding/lowering tire pressure by increments.
     public void AddAir() => TirePressure = Math.Max(0, TirePressure + PressureIncrement);
     public void RemoveAir() => TirePressure = Math.Max(0, TirePressure - PressureIncrement);
+    //For setting and initial tire size.
     public void SetDiameter(float diameter) => TireDiameter = Math.Max(0, diameter);
+    //For increasing/decreasing tire size by increments.
     public void IncreaseDiameter() => TireDiameter = Math.Max(0, TireDiameter + DiameterIncrement);
     public void DecreaseDiameter() => TireDiameter = Math.Max(0, TireDiameter - DiameterIncrement);
         

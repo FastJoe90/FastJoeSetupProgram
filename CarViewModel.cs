@@ -9,59 +9,59 @@ public partial class CarViewModel : ObservableObject
 
     // Corner Weight Properties
     public string CarName { get => _car.CarName; set { _car.CarName = value; Refresh(); } }
-    public float WeightLF { get => _car.GetCornerWeight(Corners.LF); set { _car.SetCornerWeight(Corners.LF, value); Refresh(); } }
-    public float WeightRF { get => _car.GetCornerWeight(Corners.RF); set { _car.SetCornerWeight(Corners.RF, value); Refresh(); } }
-    public float WeightLR { get => _car.GetCornerWeight(Corners.LR); set { _car.SetCornerWeight(Corners.LR, value); Refresh(); } }
-    public float WeightRR { get => _car.GetCornerWeight(Corners.RR); set { _car.SetCornerWeight(Corners.RR, value); Refresh(); } }
-    public float DiameterLF { get => _car.GetTireSize(Corners.LF); set { _car.SetTireSize(Corners.LF, value); Refresh(); } }
-    public float DiameterRF { get => _car.GetTireSize(Corners.RF); set { _car.SetTireSize(Corners.RF, value); Refresh(); } }
-    public float DiameterLR { get => _car.GetTireSize(Corners.LR); set { _car.SetTireSize(Corners.LR, value); Refresh(); } }
-    public float DiameterRR { get => _car.GetTireSize(Corners.RR); set { _car.SetTireSize(Corners.RR, value); Refresh(); } }
-    public float PressureLF { get => _car.GetTirePressure(Corners.LF); set { _car.SetTirePressure(Corners.LF, value); Refresh(); } }
-    public float PressureRF { get => _car.GetTirePressure(Corners.RF); set { _car.SetTirePressure(Corners.RF, value); Refresh(); } }
-    public float PressureLR { get => _car.GetTirePressure(Corners.LR); set { _car.SetTirePressure(Corners.LR, value); Refresh(); } }
-    public float PressureRR { get => _car.GetTirePressure(Corners.RR); set { _car.SetTirePressure(Corners.RR, value); Refresh(); } }
-    public float HeightLF { get => _car.GetTubeHeight(Corners.LF); set { _car.SetTubeHeight(Corners.LF, value); Refresh(); } }
-    public float HeightRF { get => _car.GetTubeHeight(Corners.RF); set { _car.SetTubeHeight(Corners.RF, value); Refresh(); } }
-    public float HeightLR { get => _car.GetTubeHeight(Corners.LR); set { _car.SetTubeHeight(Corners.LR, value); Refresh(); } }
-    public float HeightRR { get => _car.GetTubeHeight(Corners.RR); set { _car.SetTubeHeight(Corners.RR, value); Refresh(); } }
+    public float WeightLF { get => _car.GetCornerWeight(Corner.LF); set { _car.SetCornerWeight(Corner.LF, value); Refresh(); } }
+    public float WeightRF { get => _car.GetCornerWeight(Corner.RF); set { _car.SetCornerWeight(Corner.RF, value); Refresh(); } }
+    public float WeightLR { get => _car.GetCornerWeight(Corner.LR); set { _car.SetCornerWeight(Corner.LR, value); Refresh(); } }
+    public float WeightRR { get => _car.GetCornerWeight(Corner.RR); set { _car.SetCornerWeight(Corner.RR, value); Refresh(); } }
+    public float DiameterLF { get => _car.GetTireSize(Corner.LF); set { _car.SetTireSize(Corner.LF, value); Refresh(); } }
+    public float DiameterRF { get => _car.GetTireSize(Corner.RF); set { _car.SetTireSize(Corner.RF, value); Refresh(); } }
+    public float DiameterLR { get => _car.GetTireSize(Corner.LR); set { _car.SetTireSize(Corner.LR, value); Refresh(); } }
+    public float DiameterRR { get => _car.GetTireSize(Corner.RR); set { _car.SetTireSize(Corner.RR, value); Refresh(); } }
+    public float PressureLF { get => _car.GetTirePressure(Corner.LF); set { _car.SetTirePressure(Corner.LF, value); Refresh(); } }
+    public float PressureRF { get => _car.GetTirePressure(Corner.RF); set { _car.SetTirePressure(Corner.RF, value); Refresh(); } }
+    public float PressureLR { get => _car.GetTirePressure(Corner.LR); set { _car.SetTirePressure(Corner.LR, value); Refresh(); } }
+    public float PressureRR { get => _car.GetTirePressure(Corner.RR); set { _car.SetTirePressure(Corner.RR, value); Refresh(); } }
+    public float HeightLF { get => _car.GetTubeHeight(Corner.LF); set { _car.SetTubeHeight(Corner.LF, value); Refresh(); } }
+    public float HeightRF { get => _car.GetTubeHeight(Corner.RF); set { _car.SetTubeHeight(Corner.RF, value); Refresh(); } }
+    public float HeightLR { get => _car.GetTubeHeight(Corner.LR); set { _car.SetTubeHeight(Corner.LR, value); Refresh(); } }
+    public float HeightRR { get => _car.GetTubeHeight(Corner.RR); set { _car.SetTubeHeight(Corner.RR, value); Refresh(); } }
 
     // Spring Rate Properties
-    public float BarLF { get => _car.GetBarDiameter(Corners.LF); set { _car.SetBarDiameter(Corners.LF, value); Refresh(); } }
-    public float BarRF { get => _car.GetBarDiameter(Corners.RF); set { _car.SetBarDiameter(Corners.RF, value); Refresh(); } }
-    public float BarLR { get => _car.GetBarDiameter(Corners.LR); set { _car.SetBarDiameter(Corners.LR, value); Refresh(); } }
-    public float BarRR { get => _car.GetBarDiameter(Corners.RR); set { _car.SetBarDiameter(Corners.RR, value); Refresh(); } }
+    public float BarLF { get => _car.GetBarDiameter(Corner.LF); set { _car.SetBarDiameter(Corner.LF, value); Refresh(); } }
+    public float BarRF { get => _car.GetBarDiameter(Corner.RF); set { _car.SetBarDiameter(Corner.RF, value); Refresh(); } }
+    public float BarLR { get => _car.GetBarDiameter(Corner.LR); set { _car.SetBarDiameter(Corner.LR, value); Refresh(); } }
+    public float BarRR { get => _car.GetBarDiameter(Corner.RR); set { _car.SetBarDiameter(Corner.RR, value); Refresh(); } }
 
     // Shock properties per corner
-    public float ShockCompressionLF { get => _car.GetShock(Corners.LF).Compression; set { _car.GetShock(Corners.LF).Compression = value; Refresh(); } }
-    public float ShockReboundLF { get => _car.GetShock(Corners.LF).Rebound; set { _car.GetShock(Corners.LF).Rebound = value; Refresh(); } }
-    public int ShockClicksLF { get => _car.GetShock(Corners.LF).ReboundClicks; set { _car.GetShock(Corners.LF).ReboundClicks = value; Refresh(); } }
+    public float ShockCompressionLF { get => _car.GetShock(Corner.LF).Compression; set { _car.GetShock(Corner.LF).Compression = value; Refresh(); } }
+    public float ShockReboundLF { get => _car.GetShock(Corner.LF).Rebound; set { _car.GetShock(Corner.LF).Rebound = value; Refresh(); } }
+    public int ShockClicksLF { get => _car.GetShock(Corner.LF).ReboundClicks; set { _car.GetShock(Corner.LF).ReboundClicks = value; Refresh(); } }
   
 
-    public float ShockCompressionRF { get => _car.GetShock(Corners.RF).Compression; set { _car.GetShock(Corners.RF).Compression = value; Refresh(); } }
-    public float ShockReboundRF { get => _car.GetShock(Corners.RF).Rebound; set { _car.GetShock(Corners.RF).Rebound = value; Refresh(); } }
-    public int ShockClicksRF { get => _car.GetShock(Corners.RF).ReboundClicks; set { _car.GetShock(Corners.RF).ReboundClicks = value; Refresh(); } }
+    public float ShockCompressionRF { get => _car.GetShock(Corner.RF).Compression; set { _car.GetShock(Corner.RF).Compression = value; Refresh(); } }
+    public float ShockReboundRF { get => _car.GetShock(Corner.RF).Rebound; set { _car.GetShock(Corner.RF).Rebound = value; Refresh(); } }
+    public int ShockClicksRF { get => _car.GetShock(Corner.RF).ReboundClicks; set { _car.GetShock(Corner.RF).ReboundClicks = value; Refresh(); } }
    
 
-    public float ShockCompressionLR { get => _car.GetShock(Corners.LR).Compression; set { _car.GetShock(Corners.LR).Compression = value; Refresh(); } }
-    public float ShockReboundLR { get => _car.GetShock(Corners.LR).Rebound; set { _car.GetShock(Corners.LR).Rebound = value; Refresh(); } }
-    public int ShockClicksLR { get => _car.GetShock(Corners.LR).ReboundClicks; set { _car.GetShock(Corners.LR).ReboundClicks = value; Refresh(); } }
+    public float ShockCompressionLR { get => _car.GetShock(Corner.LR).Compression; set { _car.GetShock(Corner.LR).Compression = value; Refresh(); } }
+    public float ShockReboundLR { get => _car.GetShock(Corner.LR).Rebound; set { _car.GetShock(Corner.LR).Rebound = value; Refresh(); } }
+    public int ShockClicksLR { get => _car.GetShock(Corner.LR).ReboundClicks; set { _car.GetShock(Corner.LR).ReboundClicks = value; Refresh(); } }
     
 
-    public float ShockCompressionRR { get => _car.GetShock(Corners.RR).Compression; set { _car.GetShock(Corners.RR).Compression = value; Refresh(); } }
-    public float ShockReboundRR { get => _car.GetShock(Corners.RR).Rebound; set { _car.GetShock(Corners.RR).Rebound = value; Refresh(); } }
-    public int ShockClicksRR { get => _car.GetShock(Corners.RR).ReboundClicks; set { _car.GetShock(Corners.RR).ReboundClicks = value; Refresh(); } }
+    public float ShockCompressionRR { get => _car.GetShock(Corner.RR).Compression; set { _car.GetShock(Corner.RR).Compression = value; Refresh(); } }
+    public float ShockReboundRR { get => _car.GetShock(Corner.RR).Rebound; set { _car.GetShock(Corner.RR).Rebound = value; Refresh(); } }
+    public int ShockClicksRR { get => _car.GetShock(Corner.RR).ReboundClicks; set { _car.GetShock(Corner.RR).ReboundClicks = value; Refresh(); } }
    
 
     // Commands to adjust clicks
-    public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corners.LF).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corners.LF).DecrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corners.RF).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corners.RF).DecrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corners.LR).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corners.LR).DecrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corners.RR).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corners.RR).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).IncrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).DecrementClick(); Refresh(); });
 
     // Calculated Stats (Read-Only for the UI)
     public float TotalWeight => _car.TotalWeight;
