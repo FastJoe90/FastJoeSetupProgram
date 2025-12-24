@@ -23,21 +23,23 @@
     {
         return GetAverage(a, b) - GetAverage(c, d);
     }
-    private CarCorner GetCorner(Corner corner) => _corners[(int)corner];
+    public CarCorner GetCorner(Corner corner) => _corners[(int)corner];
     public Shock GetShock(Corner corner) => GetCorner(corner).Shock;     
     public void SetShock(Corner corner, Shock shock) => GetCorner(corner).Shock = shock;    
-    public Tire GetWheel(Corner corner) => GetCorner(corner).Wheel;   
-    public void SetWheel(Corner corner, Tire wheel) => GetCorner(corner).Wheel = wheel;
+    public Tire GetTire(Corner corner) => GetCorner(corner).Tire;   
+    public void SetTire(Corner corner, Tire wheel) => GetCorner(corner).Tire = wheel;
     public float GetCornerWeight(Corner corner) => GetCorner(corner).Weight;
     public void SetCornerWeight(Corner corner, float weight) => GetCorner(corner).Weight = weight;   
-    public float GetTireSize(Corner corner) => GetCorner(corner).Wheel.TireDiameter;
-    public void SetTireSize(Corner corner, float diameter) => GetCorner(corner).Wheel.SetDiameter(diameter);    
+    public float GetTireSize(Corner corner) => GetCorner(corner).Tire.TireDiameter;
+    public void SetTireSize(Corner corner, float diameter) => GetCorner(corner).Tire.SetDiameter(diameter);    
     public float GetTubeHeight(Corner corner) => GetCorner(corner).TubeHeight;
     public void SetTubeHeight(Corner corner, float height) => GetCorner(corner).TubeHeight = height;    
-    public float GetTirePressure(Corner corner) => GetCorner(corner).Wheel.TirePressure;
-    public void SetTirePressure(Corner corner, float pressure) => GetCorner(corner).Wheel.SetPressure(pressure);     
+    public float GetTirePressure(Corner corner) => GetCorner(corner).Tire.TirePressure;
+    public void SetTirePressure(Corner corner, float pressure) => GetCorner(corner).Tire.SetPressure(pressure);     
     public float GetBarDiameter(Corner corner) => GetCorner(corner).BarDiameter;
     public void SetBarDiameter(Corner corner, float rate) => GetCorner(corner).BarDiameter = rate;
-   
+    public float GetWheelSpacing(Corner corner) => GetCorner(corner).WheelSpacing;
+    public void SetWheelSpacing(Corner corner, float spacing) => GetCorner(corner).SetSpacing(spacing);
+
 }
 public enum Corner { LF, RF, LR, RR }

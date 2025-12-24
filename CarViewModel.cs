@@ -1,18 +1,22 @@
 ﻿using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
+using System.ComponentModel.Design;
 
 
 public partial class CarViewModel : ObservableObject
 {
     private readonly RaceCar _car = new();
 
-    // Corner Weight Properties
+    
     public string CarName { get => _car.CarName; set { _car.CarName = value; Refresh(); } }
+    //Weight Properties
     public float WeightLF { get => _car.GetCornerWeight(Corner.LF); set { _car.SetCornerWeight(Corner.LF, value); Refresh(); } }
     public float WeightRF { get => _car.GetCornerWeight(Corner.RF); set { _car.SetCornerWeight(Corner.RF, value); Refresh(); } }
     public float WeightLR { get => _car.GetCornerWeight(Corner.LR); set { _car.SetCornerWeight(Corner.LR, value); Refresh(); } }
     public float WeightRR { get => _car.GetCornerWeight(Corner.RR); set { _car.SetCornerWeight(Corner.RR, value); Refresh(); } }
+    //Tire Properties
     public float DiameterLF { get => _car.GetTireSize(Corner.LF); set { _car.SetTireSize(Corner.LF, value); Refresh(); } }
     public float DiameterRF { get => _car.GetTireSize(Corner.RF); set { _car.SetTireSize(Corner.RF, value); Refresh(); } }
     public float DiameterLR { get => _car.GetTireSize(Corner.LR); set { _car.SetTireSize(Corner.LR, value); Refresh(); } }
@@ -21,6 +25,7 @@ public partial class CarViewModel : ObservableObject
     public float PressureRF { get => _car.GetTirePressure(Corner.RF); set { _car.SetTirePressure(Corner.RF, value); Refresh(); } }
     public float PressureLR { get => _car.GetTirePressure(Corner.LR); set { _car.SetTirePressure(Corner.LR, value); Refresh(); } }
     public float PressureRR { get => _car.GetTirePressure(Corner.RR); set { _car.SetTirePressure(Corner.RR, value); Refresh(); } }
+    //Frame Height Properties
     public float HeightLF { get => _car.GetTubeHeight(Corner.LF); set { _car.SetTubeHeight(Corner.LF, value); Refresh(); } }
     public float HeightRF { get => _car.GetTubeHeight(Corner.RF); set { _car.SetTubeHeight(Corner.RF, value); Refresh(); } }
     public float HeightLR { get => _car.GetTubeHeight(Corner.LR); set { _car.SetTubeHeight(Corner.LR, value); Refresh(); } }
@@ -31,6 +36,11 @@ public partial class CarViewModel : ObservableObject
     public float BarRF { get => _car.GetBarDiameter(Corner.RF); set { _car.SetBarDiameter(Corner.RF, value); Refresh(); } }
     public float BarLR { get => _car.GetBarDiameter(Corner.LR); set { _car.SetBarDiameter(Corner.LR, value); Refresh(); } }
     public float BarRR { get => _car.GetBarDiameter(Corner.RR); set { _car.SetBarDiameter(Corner.RR, value); Refresh(); } }
+    // Wheel Spacing Properties
+    public float SpacingLF { get => _car.GetWheelSpacing(Corner.LF); set { _car.SetWheelSpacing(Corner.LF, value); Refresh(); } }
+    public float SpacingRF { get => _car.GetWheelSpacing(Corner.RF); set { _car.SetWheelSpacing(Corner.RF, value); Refresh(); } }
+    public float SpacingLR { get => _car.GetWheelSpacing(Corner.LR); set { _car.SetWheelSpacing(Corner.LR, value); Refresh(); } }
+    public float SpacingRR { get => _car.GetWheelSpacing(Corner.RR); set { _car.SetWheelSpacing(Corner.RR, value); Refresh(); } }
 
     // Shock properties per corner
     public float ShockCompressionLF { get => _car.GetShock(Corner.LF).Compression; set { _car.GetShock(Corner.LF).Compression = value; Refresh(); } }
@@ -51,17 +61,39 @@ public partial class CarViewModel : ObservableObject
     public float ShockCompressionRR { get => _car.GetShock(Corner.RR).Compression; set { _car.GetShock(Corner.RR).Compression = value; Refresh(); } }
     public float ShockReboundRR { get => _car.GetShock(Corner.RR).Rebound; set { _car.GetShock(Corner.RR).Rebound = value; Refresh(); } }
     public int ShockClicksRR { get => _car.GetShock(Corner.RR).ReboundClicks; set { _car.GetShock(Corner.RR).ReboundClicks = value; Refresh(); } }
-   
 
-    // Commands to adjust clicks
-    public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).PlusClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).MinusClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).PlusClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).MinusClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).PlusClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).MinusClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).PlusClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).MinusClick(); Refresh(); });
+
+    // Commands to adjust shocks.
+
+    public ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).PlusClick(); Refresh(); });
+    public ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).MinusClick(); Refresh(); });
+    public ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).PlusClick(); Refresh(); });
+    public ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).MinusClick(); Refresh(); });
+    public ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).PlusClick(); Refresh(); });
+    public ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).MinusClick(); Refresh(); });
+    public ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).PlusClick(); Refresh(); });
+    public ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).MinusClick(); Refresh(); });
+
+    // Commands to increase/decrease pressure
+    public ICommand IncPressureLF => new RelayCommand(() => { _car.GetTire(Corner.LF).AddAir(); Refresh(); });
+    public ICommand DecPressureLF => new RelayCommand(() => { _car.GetTire(Corner.LF).RemoveAir(); Refresh(); });
+    public ICommand IncPressureRF => new RelayCommand(() => { _car.GetTire(Corner.RF).AddAir(); Refresh(); });
+    public ICommand DecPressureRF => new RelayCommand(() => { _car.GetTire(Corner.RF).RemoveAir(); Refresh(); });
+    public ICommand IncPressureLR => new RelayCommand(() => { _car.GetTire(Corner.LR).AddAir(); Refresh(); });
+    public ICommand DecPressureLR => new RelayCommand(() => { _car.GetTire(Corner.LR).RemoveAir(); Refresh(); });
+    public ICommand IncPressureRR => new RelayCommand(() => { _car.GetTire(Corner.RR).AddAir(); Refresh(); });
+    public ICommand DecPressureRR => new RelayCommand(() => { _car.GetTire(Corner.RR).RemoveAir(); Refresh(); });
+
+    //Commands to add/remove wheel spacers
+    public ICommand AddSpacerLF => new RelayCommand(() => { _car.GetCorner(Corner.LF).AddSpacer(); Refresh(); });
+    public ICommand RemoveSpacerLF => new RelayCommand(() => { _car.GetCorner(Corner.LF).RemoveSpacer(); Refresh(); });
+    public ICommand AddSpacerRF => new RelayCommand(() => { _car.GetCorner(Corner.RF).AddSpacer(); Refresh(); });
+    public ICommand RemoveSpacerRF => new RelayCommand(() => { _car.GetCorner(Corner.RF).RemoveSpacer(); Refresh(); });
+    public ICommand AddSpacerLR => new RelayCommand(() => { _car.GetCorner(Corner.LR).AddSpacer(); Refresh(); });
+    public ICommand RemoveSpacerLR => new RelayCommand(() => { _car.GetCorner(Corner.LR).RemoveSpacer(); Refresh(); });
+    public ICommand AddSpacerRR => new RelayCommand(() => { _car.GetCorner(Corner.RR).AddSpacer(); Refresh(); });
+    public ICommand RemoveSpacerRR => new RelayCommand(() => { _car.GetCorner(Corner.RR).RemoveSpacer(); Refresh(); });
+   
 
     // Calculated Stats (Read-Only for the UI)
     public float TotalWeight => _car.TotalWeight;
@@ -143,6 +175,12 @@ public partial class CarViewModel : ObservableObject
                 sw.WriteLine($"--- TORSION BAR DIAMETER ---");
                 sw.WriteLine($"LEFT FRONT: {BarLF} in | RIGHT FRONT: {BarRF} in");
                 sw.WriteLine($"LEFT REAR:  {BarLR} in | RIGHT REAR:  {BarRR} in");
+                sw.WriteLine();
+
+                // WHEEL SPACING
+                sw.WriteLine($"--- WHEEL SPACING ---");
+                sw.WriteLine($"LEFT FRONT: {SpacingLF} in | RIGHT FRONT: {SpacingRF} in");
+                sw.WriteLine($"LEFT REAR:  {SpacingLR} in | RIGHT REAR:  {SpacingRR} in");
                 sw.WriteLine();
 
                 // SHOCK SETTINGS
@@ -256,6 +294,13 @@ public partial class CarViewModel : ObservableObject
                         if (line.Contains("RIGHT FRONT:")) BarRF = ExtractDoubleValue(line, "RIGHT FRONT:", "in");
                         if (line.Contains("LEFT REAR:")) BarLR = ExtractDoubleValue(line, "LEFT REAR:", "in");
                         if (line.Contains("RIGHT REAR:")) BarRR = ExtractDoubleValue(line, "RIGHT REAR:", "in");
+                    }
+                    else if (currentSection.Contains("WHEEL SPACING"))
+                    {
+                        if (line.Contains("LEFT FRONT:")) SpacingLF = ExtractDoubleValue(line, "LEFT FRONT:", "in");
+                        if (line.Contains("RIGHT FRONT:")) SpacingRF = ExtractDoubleValue(line, "RIGHT FRONT:", "in");
+                        if (line.Contains("LEFT REAR:")) SpacingLR = ExtractDoubleValue(line, "LEFT REAR:", "in");
+                        if (line.Contains("RIGHT REAR:")) SpacingRR = ExtractDoubleValue(line, "RIGHT REAR:", "in");
                     }
                     else if (currentSection.Contains("SHOCKS"))
                     {
@@ -373,6 +418,10 @@ public partial class CarViewModel : ObservableObject
         OnPropertyChanged(nameof(ShockReboundRR));
         OnPropertyChanged(nameof(ShockClicksRR));
         OnPropertyChanged(nameof(ShockReboundRR));
+        OnPropertyChanged(nameof(SpacingLF));
+        OnPropertyChanged(nameof(SpacingRF));
+        OnPropertyChanged(nameof(SpacingLR));
+        OnPropertyChanged(nameof(SpacingRR));
 
         // Calculated stats
         OnPropertyChanged(nameof(TotalWeight));
