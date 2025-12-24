@@ -1,75 +1,45 @@
 ﻿public class RaceCar
 {
-    private readonly float[] _cornerWeight = { 0, 0, 0, 0 };//Pounds    
-    private readonly float[] _tubeHeight = { 0, 0, 0, 0 }; //Inches
-    private readonly float[] _tirePressure = { 0, 0, 0, 0 }; //PSI
-    private readonly float[] _barDiameter = { 0, 0, 0, 0 }; // inches (torsion bar diameter per corner)
-
-    // Per-corner shocks
-    private readonly Shock[] _shocks =
-    {
-        new Shock(), new Shock(), new Shock(), new Shock(),
-    };
-    private readonly Wheel[] _wheel =
-    {
-        new Wheel(), new Wheel(), new Wheel(), new Wheel(),
-    };
-
+    public Corner LeftFront { get; } = new Corner();
+    public Corner RightFront { get; } = new Corner();
+    public Corner LeftRear { get; } = new Corner();
+    public Corner RightRear { get; } = new Corner();
+    private readonly Corner[] _corners;
     public string CarName { get; set; } = "DEFAULT";
 
     public RaceCar()
     {
-       
+        _corners = new[] { LeftFront, RightFront, LeftRear, RightRear };
     }
 
-    public float TotalWeight => _cornerWeight.Sum();
-    public float CrossWeight => GetCornerWeight(Corner.LR) + GetCornerWeight(Corner.RF);
-    public float LeftSideWeight => GetCornerWeight(Corner.LF) + GetCornerWeight(Corner.LR);
-    public float RearWeight => GetCornerWeight(Corner.LR) + GetCornerWeight(Corner.RR);
-    public float FrontStagger => GetTireSize(Corner.RF) - GetTireSize(Corner.LF);
-    public float RearStagger => GetTireSize(Corner.RR) - GetTireSize(Corner.LR);
-    public float Tilt => GetAverage(_tubeHeight[(int)Corner.RF], _tubeHeight[(int)Corner.RR], _tubeHeight[(int)Corner.LF], _tubeHeight[(int)Corner.LR]);
-    public float Rake => GetAverage(_tubeHeight[(int)Corner.LR], _tubeHeight[(int)Corner.RR], _tubeHeight[(int)Corner.LF], _tubeHeight[(int)Corner.RF]);
-
-    // Expose shocks per corner
-    public Shock GetShock(Corner corner) => _shocks[(int)corner];
-    public void SetShock(Corner corner, Shock shock) => _shocks[(int)corner] = shock;
-    // Expose Wheels and Tires per corner. This is goign to change to 2 classes very quick.
-    public Wheel GetWheel(Corner corner) => _wheel[(int)corner];
-    public void SetWheel(Corner corner, Wheel wheel) => _wheel[(int)corner] = wheel;
-
-    //Simple helper method
-    public float GetAverage(float a, float b) => (a + b) / 2; 
-    public float GetAverage(float a, float b, float c, float d)
+    public float TotalWeight => _corners.Sum(c => c.Weight);
+    public float CrossWeight => GetCornerWeight(Corners.LR) + GetCornerWeight(Corners.RF);
+    public float LeftSideWeight => GetCornerWeight(Corners.LF) + GetCornerWeight(Corners.LR);
+    public float RearWeight => GetCornerWeight(Corners.LR) + GetCornerWeight(Corners.RR);
+    public float FrontStagger => GetTireSize(Corners.RF) - GetTireSize(Corners.LF);
+    public float RearStagger => GetTireSize(Corners.RR) - GetTireSize(Corners.LR);
+    public float Tilt => GetDifferenceOfAverage(GetTubeHeight(Corners.RF), GetTubeHeight(Corners.RR), GetTubeHeight(Corners.LF), GetTubeHeight(Corners.LR));
+    public float Rake => GetDifferenceOfAverage(GetTubeHeight(Corners.RR), GetTubeHeight(Corners.LR), GetTubeHeight(Corners.RF), GetTubeHeight(Corners.LF));
+    public float GetAverage(float a, float b) => (a + b) / 2;
+    public float GetDifferenceOfAverage(float a, float b, float c, float d)
     {
         return GetAverage(a, b) - GetAverage(c, d);
     }
-    
-    public float GetCornerWeight(Corner corner) => _cornerWeight[(int)corner];
-    public void SetCornerWeight(Corner corner, float weight) 
-    {
-        _cornerWeight[(int)corner] = weight;
-    }
-    public float GetTireSize(Corner corner) => _wheel[(int)corner].TireDiameter;
-    public void SetTireSize(Corner corner, float diameter)
-    {
-        _wheel[(int)corner].TireDiameter = diameter;
-    }
-    public float GetTubeHeight(Corner corner) => _tubeHeight[(int)corner];
-    public void SetTubeHeight(Corner corner, float height)
-    {
-        _tubeHeight[(int)corner] = height;
-    }
-    public float GetTirePressure(Corner corner) => _tirePressure[(int)corner];
-    public void SetTirePressure(Corner corner, float pressure)
-    {
-        _tirePressure[(int)corner] = pressure;
-    }
-    // Bar diameter accessors
-    public float GetBarDiameter(Corner corner) => _barDiameter[(int)corner];
-    public void SetBarDiameter(Corner corner, float rate)
-    {
-        _barDiameter[(int)corner] = rate;
-    }
+    private Corner GetCorner(Corners corner) => _corners[(int)corner];
+    public Shock GetShock(Corners corner) => GetCorner(corner).Shock;     
+    public void SetShock(Corners corner, Shock shock) => GetCorner(corner).Shock = shock;    
+    public Wheel GetWheel(Corners corner) => GetCorner(corner).Wheel;   
+    public void SetWheel(Corners corner, Wheel wheel) => GetCorner(corner).Wheel = wheel;
+    public float GetCornerWeight(Corners corner) => GetCorner(corner).Weight;
+    public void SetCornerWeight(Corners corner, float weight) => GetCorner(corner).Weight = weight;   
+    public float GetTireSize(Corners corner) => GetCorner(corner).Wheel.TireDiameter;
+    public void SetTireSize(Corners corner, float diameter) => GetCorner(corner).Wheel.SetDiameter(diameter);    
+    public float GetTubeHeight(Corners corner) => GetCorner(corner).TubeHeight;
+    public void SetTubeHeight(Corners corner, float height) => GetCorner(corner).TubeHeight = height;    
+    public float GetTirePressure(Corners corner) => GetCorner(corner).Wheel.TirePressure;
+    public void SetTirePressure(Corners corner, float pressure) => GetCorner(corner).Wheel.SetPressure(pressure);     
+    public float GetBarDiameter(Corners corner) => GetCorner(corner).BarDiameter;
+    public void SetBarDiameter(Corners corner, float rate) => GetCorner(corner).BarDiameter = rate;
+   
 }
-public enum Corner { LF, RF, LR, RR }
+public enum Corners { LF, RF, LR, RR }
