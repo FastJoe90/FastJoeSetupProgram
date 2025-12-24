@@ -54,14 +54,14 @@ public partial class CarViewModel : ObservableObject
    
 
     // Commands to adjust clicks
-    public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).DecrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).DecrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).DecrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).IncrementClick(); Refresh(); });
-    public System.Windows.Input.ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).DecrementClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).PlusClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockLF => new RelayCommand(() => { _car.GetShock(Corner.LF).MinusClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).PlusClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockRF => new RelayCommand(() => { _car.GetShock(Corner.RF).MinusClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).PlusClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockLR => new RelayCommand(() => { _car.GetShock(Corner.LR).MinusClick(); Refresh(); });
+    public System.Windows.Input.ICommand IncShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).PlusClick(); Refresh(); });
+    public System.Windows.Input.ICommand DecShockRR => new RelayCommand(() => { _car.GetShock(Corner.RR).MinusClick(); Refresh(); });
 
     // Calculated Stats (Read-Only for the UI)
     public float TotalWeight => _car.TotalWeight;

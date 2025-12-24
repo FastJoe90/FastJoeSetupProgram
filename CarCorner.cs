@@ -6,12 +6,10 @@
     public float Weight { get; set; } //In pounds
     public float TubeHeight { get; set; } //In Inches
     public float BarDiameter { get; set; } //In Inches.
-    private float SpacerSize { get; init; } = 0.25f; //Typical race car wheel spacers are 1/4 inch.
+    private float SpacerSize { get; init; } = 0.25f; //Typical race car wheel spacers are 1/4 inch. **NEEDS IMPLEMENTED**
    
-   
+   //Needs implemented.
     public void SetWheelSpacing(float spacing) => WheelSpacing = Math.Max(0, spacing);
     public void AddSpacer() => WheelSpacing = Math.Max(0, WheelSpacing + SpacerSize);
     public void RemoveSpacer() => WheelSpacing = Math.Max(0, WheelSpacing - SpacerSize);
-
-
 }

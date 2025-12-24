@@ -1,5 +1,4 @@
-﻿
-public class Tire
+﻿public class Tire
 {
      //Measured differently on different style vehicles. For now, this will work. In Inches.   
     public float TirePressure { get; private set; } //Measured in PSI.
@@ -13,12 +12,12 @@ public class Tire
     }  
     //For setting an initial pressure.
     public void SetPressure(float pressure) => TirePressure = Math.Max(0, pressure);
-    //For adding/lowering tire pressure by increments.
+    //For adding/lowering tire pressure by increments. NEEDS IMPLEMENTED.
     public void AddAir() => TirePressure = Math.Max(0, TirePressure + PressureIncrement);
     public void RemoveAir() => TirePressure = Math.Max(0, TirePressure - PressureIncrement);
     //For setting and initial tire size.
     public void SetDiameter(float diameter) => TireDiameter = Math.Max(0, diameter);
-    //For increasing/decreasing tire size by increments.
+    //For increasing/decreasing tire size by increments. NEEDS IMPLEMENTED.
     public void IncreaseDiameter() => TireDiameter = Math.Max(0, TireDiameter + DiameterIncrement);
     public void DecreaseDiameter() => TireDiameter = Math.Max(0, TireDiameter - DiameterIncrement);
         

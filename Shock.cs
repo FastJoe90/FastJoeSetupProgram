@@ -13,22 +13,20 @@ public class Shock
         get => _reboundClicks;
         set => _reboundClicks = Clamp(value, -MaxNegativeClicks, 0);
     }  
-
     public Shock()
     {
         // default to 0 clicks
         _reboundClicks = 0;
     }
-
-    public Shock(float compression, float rebound, int initialClicks = 0, int maxNegativeClicks = 26)
+    public Shock(float compression, float rebound, int baseClicks = 0, int maxNegativeClicks = 26)
     {
         Compression = compression;
         Rebound = rebound;
         MaxNegativeClicks = maxNegativeClicks;
-        _reboundClicks = Clamp(initialClicks, -MaxNegativeClicks, 0);
+        _reboundClicks = Clamp(baseClicks, -MaxNegativeClicks, 0);
     }  
-    public void IncrementClick() => ReboundClicks = ReboundClicks + 1; 
-    public void DecrementClick() => ReboundClicks = ReboundClicks - 1; 
+    public void PlusClick() => ReboundClicks = ReboundClicks + 1; 
+    public void MinusClick() => ReboundClicks = ReboundClicks - 1; 
     private static int Clamp(int v, int lo, int hi) => v < lo ? lo : (v > hi ? hi : v);
 
 
